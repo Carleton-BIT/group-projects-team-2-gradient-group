@@ -1,0 +1,39 @@
+{% load static %}
+<header>
+   <div class="header-logo">
+      <h1><a href="/">Raven's Bargain</a></h1>
+   </div>
+   <nav>
+      <ul>
+        <!--TO DO add dropdown with product categories-->
+         {% if user.is_authenticated %}
+            <li>
+                <form action="{% url 'profile' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit">Welcome, {{ user.username }}</button>
+               </form>
+            </li>
+            <li>
+               <form action="{% url 'logout' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit">Log Out</button>
+               </form>
+            </li>
+         {% else %}
+            <li>
+               <form action="{% url 'login' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit">Log In</button>
+               </form>
+            </li>
+            <li>
+               <form action="{% url 'signup' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit">Sign Up</button>
+               </form>
+            </li>
+         {% endif %}
+        <!--TO DO add cart redirect-->
+      </ul>
+   </nav>
+</header>

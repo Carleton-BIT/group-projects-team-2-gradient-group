@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+{% include 'core/head.html' %}
+
+<body>
+{% include 'core/navbar.html' %}
+
+<section class="products">
+    <div class="signup-container">
+        <div class="login-text">
+            <h2>Sign up</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">Sign Up</button>
+            </form>
+            <div class="login-buttons">
+                <p>Already have an account?</p>
+                <form action="{% url 'login' %}" method="get">
+                    <button type="submit">Log In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
