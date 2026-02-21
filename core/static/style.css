@@ -1,5 +1,6 @@
 :root {
   /* Core colours */
+  --colour-carleton-red: #E91C24;
   /*https://coolors.co/palette/f8f9fa-e9ecef-dee2e6-ced4da-adb5bd-6c757d-495057-343a40-212529 */
   --colour-white: #f8f9fa;
   --colour-light-grey: #e9ecef;
@@ -8,6 +9,8 @@
   --colour-darker-grey: #adb5bd;
   --colour-dark: #343a40;
   --colour-darker: #212529;
+  --colour-carleton-black: #191919;
+
   /* https://coolors.co/palette/e63946-f1faee-a8dadc-457b9d-1d3557 */
   --colour-amaranth: #e63946;
   --colour-peppermint: #f1faee;
@@ -19,8 +22,8 @@
   --header-heading-colour: var(--colour-white);
 
   /* Body configuration */
-  --body-default-colour: var(--colour-darker);
-  --body-background-colour: var(--colour-grey);
+  --body-default-colour: var(--colour-carleton-black);
+  --body-background-colour: var(--colour-white);
 }
 
 #overlay {
@@ -49,7 +52,7 @@ header {
   display: flex;
   justify-content: space-between;
   padding: 2rem;
-  background-color: var(--colour-darker);
+  background-color: var(--colour-white);
 }
 .header-logo {
   display: flex;
@@ -57,12 +60,12 @@ header {
 }
 
 header img {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 6rem;
+  height: 6rem;
   display: flex;
 }
 header h1 {
-  color: var(--header-heading-colour);
+  color: var(--colour-carleton-black);
   user-select: none;
   margin-left: 0.5rem;
   font-size: 2rem;
@@ -74,10 +77,15 @@ header h1 a {
 }
 
 header button{
-  background: transparent;
+  margin-top: auto;
+  margin-right: auto;
   border: none;
-  color: white;
+  background-color: var(--colour-carleton-red);
+  color: var(--colour-white);
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
+  border-radius: 0.5rem;
 }
 
 header nav {
@@ -136,7 +144,7 @@ img {
   top: 50%;
   left: 50%;
   width: 55rem;
-  height: 27rem;
+  height: 28rem;
   margin: auto;
   padding: 1.4rem;
   background-color: var(--colour-dark-grey);
@@ -150,7 +158,7 @@ img {
   top: 50%;
   left: 50%;
   width: 55rem;
-  height: 40rem;
+  height: 45rem;
   margin: auto;
   padding: 1.4rem;
   background-color: var(--colour-dark-grey);
@@ -179,7 +187,7 @@ img {
   margin-top: auto;
   margin-right: auto;
   border: none;
-  background-color: var(--colour-dark);
+  background-color: var(--colour-carleton-red);
   color: var(--colour-white);
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
@@ -204,9 +212,10 @@ img {
 }
 
 footer {
-  background-color: var(--colour-darker);
+  background-color: var(--colour-carleton-black);
   color: var(--colour-white);
   height: auto;
+  margin-top: 1rem;
 }
 
 .footer-container {
