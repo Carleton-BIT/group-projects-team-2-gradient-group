@@ -1,14 +1,25 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
 
-@login_required
-def home(request):
-    return render(request, "core/home.html")
+from .forms import CustomUserCreationForm
+
 
 def index(request):
+    # Your homepage template
     return render(request, "core/index.html")
 
-@login_required
-def user_profile(request):
-    user = request.user
-    return render(request, 'core/profile.html', {'user': user})
+
+def signup(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+    else:
+        form = CustomUserCreationForm()
+
+    print("SIGNUP FORM FIELDS:", list(form.fields.keys()))  # <-- ADD THIS
+
+    if request.method == "POST" and form.is_valid():
+        user = form.save()
+        login(request, user)
+        return redirect("index")
+
+    return render(request, "registration/signup.html", {"form": form})
