@@ -2,244 +2,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login | Gradient Marketplace</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | Gradient Marketplace</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        :root {
-            --cu-red: #c8102e;
-            --bg: #f5f6f8;
-            --border: #e5e7eb;
-            --text-gray: #6b7280;
-            --max: 1120px;
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Top red strip */
-        .topline {
-            height: 4px;
-            background: var(--cu-red);
-        }
-
-        /* Header */
-        .header {
-            background: #ffffff;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .header-inner {
-            max-width: var(--max);
-            margin: 0 auto;
-            padding: 14px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .brand img {
-            width: 44px;
-            height: 44px;
-        }
-
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-text .uni {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-gray);
-        }
-
-        .brand-text .app {
-            font-size: 18px;
-            font-weight: 800;
-        }
-
-        .header-buttons a {
-            text-decoration: none;
-            margin-left: 10px;
-            padding: 8px 14px;
-            border-radius: 999px;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .btn-outline {
-            border: 1px solid #111827;
-            color: #111827;
-        }
-
-        .btn-red {
-            background: var(--cu-red);
-            color: #ffffff;
-        }
-
-        .btn-red:hover {
-            filter: brightness(0.95);
-        }
-
-        /* Main */
-        .main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 16px;
-        }
-
-        .login-card {
-            background: #ffffff;
-            padding: 40px;
-            width: 440px;
-            border-radius: 18px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-        }
-
-        .login-card h2 {
-            margin: 0 0 20px;
-            font-size: 26px;
-        }
-
-        .login-card label {
-            display: block;
-            margin-top: 15px;
-            font-weight: 600;
-        }
-
-        .login-card input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-        }
-
-        .login-card button {
-            margin-top: 20px;
-            padding: 12px;
-            width: 100%;
-            background: var(--cu-red);
-            color: #ffffff;
-            border: none;
-            border-radius: 999px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .login-card button:hover {
-            filter: brightness(0.95);
-        }
-
-        .signup-text {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .signup-text a {
-            color: var(--cu-red);
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .signup-text a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        .footer {
-            background: #111111;
-            color: #e5e7eb;
-            text-align: center;
-            padding: 40px 16px;
-        }
-
-        .footer img {
-            width: 200px;
-            margin-bottom: 15px;
-        }
-
-        .footer p {
-            font-size: 13px;
-            line-height: 1.6;
-            margin: 0;
-        }
-    </style>
+  <link rel="stylesheet" href="{% static 'reset.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 
-<body>
+<body class="auth-page">
 
-<div class="topline"></div>
+  <div class="topline"></div>
 
-<header class="header">
-    <div class="header-inner">
-        <a href="/" class="brand">
-            <img src="https://cdn.carleton.ca/rds/assets/cu-logos/cu-logo-color-vertical-outlined.svg" alt="Carleton University">
-            <div class="brand-text">
-                <div class="uni">Carleton University</div>
-                <div class="app">Raven's Bargain</div>
-            </div>
-        </a>
+     {% include 'core/navbar.html' %}
 
-        <div class="header-buttons">
-            <a href="{% url 'login' %}" class="btn-outline">Log In</a>
-            <a href="{% url 'signup' %}" class="btn-red">Sign Up</a>
-        </div>
-    </div>
-</header>
-
-<main class="main">
+  <main class="main">
     <div class="login-card">
-        <h2>Log In</h2>
+      <h2>Log In</h2>
 
-        <form method="post">
-            {% csrf_token %}
+      <form method="post">
+        {% csrf_token %}
 
-            <label for="id_username">Username</label>
-            {{ form.username }}
+        <label for="id_username">Username</label>
+        {{ form.username }}
 
-            <label for="id_password">Password</label>
-            {{ form.password }}
+        <label for="id_password">Password</label>
+        {{ form.password }}
 
-            <button type="submit">Log In</button>
-        </form>
+        <button type="submit">Log In</button>
+      </form>
 
-        <div class="signup-text">
-            Don’t have an account?
-            <a href="{% url 'signup' %}">Create one</a>
-        </div>
+      <div class="signup-text">
+        Don’t have an account?
+        <a href="{% url 'signup' %}">Create one</a>
+      </div>
     </div>
-</main>
+  </main>
 
-<footer class="footer">
-    <img src="https://cdn.carleton.ca/rds/assets/cu-logos/cu-logo-color-vertical-outlined.svg" alt="Carleton University">
-    <p>
-        Carleton University — Gradient Marketplace<br>
-        © 2026 <strong>Gradient Group</strong>. All Rights Reserved.<br>
-        This platform is a course project and is not affiliated with Carleton University.
-    </p>
-</footer>
+  {% include 'core/footer.html' %}
+
 
 </body>
 </html>

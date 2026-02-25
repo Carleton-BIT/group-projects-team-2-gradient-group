@@ -1,11 +1,151 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-{% include 'core/head.html' %}
-
+{% include "core/head.html" %}
 <body>
-{% include 'core/navbar.html' %}
-<h1>TO DO display listed products</h1>
+  {% include "core/navbar.html" %}
+
+  <main class="container profile-page">
+    <!-- Top header -->
+    <section class="profile-hero">
+      <div class="profile-hero__avatar" aria-hidden="true">
+        {{ user.first_name|default:user.username|slice:":1"|upper }}
+      </div>
+
+      <div class="profile-hero__info">
+        <h1 class="profile-hero__name">
+          {% if user.first_name or user.last_name %}
+            {{ user.first_name }}{% if user.last_name %} {{ user.last_name }}{% endif %}
+          {% else %}
+            {{ user.username }}
+          {% endif %}
+        </h1>
+
+        <div class="profile-hero__meta">
+          <span class="profile-pill">@{{ user.username }}</span>
+
+          {% if user.profile.carleton_email %}
+            <span class="profile-pill">{{ user.profile.carleton_email }}</span>
+          {% endif %}
+
+          {% if user.profile.student_number %}
+            <span class="profile-pill">Student # {{ user.profile.student_number }}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="profile-hero__actions">
+        <a class="btn btn-primary" href="#" aria-disabled="true">Post listing</a>
+        <a class="btn btn-secondary btn-secondary--dark" href="{% url 'index' %}">Back home</a>
+      </div>
+    </section>
+
+    <!-- Main grid -->
+    <section class="profile-grid">
+      <!-- Left: Details -->
+      <div class="profile-card">
+        <div class="profile-card__head">
+          <h2 class="profile-card__title">Student details</h2>
+          <p class="profile-card__sub">This info helps keep the marketplace student-only.</p>
+        </div>
+
+        <div class="profile-kvgrid">
+          <div class="profile-kv">
+            <div class="profile-kv__k">First name</div>
+            <div class="profile-kv__v">{{ user.first_name|default:"—" }}</div>
+          </div>
+
+          <div class="profile-kv">
+            <div class="profile-kv__k">Last name</div>
+            <div class="profile-kv__v">{{ user.last_name|default:"—" }}</div>
+          </div>
+
+          <div class="profile-kv">
+            <div class="profile-kv__k">Carleton email</div>
+            <div class="profile-kv__v profile-kv__v--break">
+              {% if user.profile.carleton_email %}{{ user.profile.carleton_email }}{% else %}—{% endif %}
+            </div>
+          </div>
+
+          <div class="profile-kv">
+            <div class="profile-kv__k">Student number</div>
+            <div class="profile-kv__v">
+              {% if user.profile.student_number %}{{ user.profile.student_number }}{% else %}—{% endif %}
+            </div>
+          </div>
+
+          <div class="profile-kv">
+            <div class="profile-kv__k">Major</div>
+            <div class="profile-kv__v">
+              {% if user.profile.major %}{{ user.profile.major }}{% else %}—{% endif %}
+            </div>
+          </div>
+
+          <div class="profile-kv">
+            <div class="profile-kv__k">Minor</div>
+            <div class="profile-kv__v">
+              {% if user.profile.minor %}{{ user.profile.minor }}{% else %}—{% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-card__footer">
+          <div class="profile-tip">
+            <span class="profile-tip__icon" aria-hidden="true">✅</span>
+            <div class="profile-tip__text">
+              Tip: Listings look more trustworthy when your profile info is complete.
+            </div>
+          </div>
+
+          <div class="profile-actions-row">
+            <a class="btn btn-secondary btn-secondary--dark" href="#" aria-disabled="true">Edit profile</a>
+            <a class="btn btn-secondary btn-secondary--dark" href="#" aria-disabled="true">Change password</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Quick actions -->
+      <aside class="profile-card profile-card--side">
+        <div class="profile-card__head">
+          <h2 class="profile-card__title">Quick actions</h2>
+          <p class="profile-card__sub">Shortcuts you’ll use a lot.</p>
+        </div>
+
+        <div class="profile-quick">
+          <a class="profile-quick__item" href="#" aria-disabled="true">
+            <div class="profile-quick__icon" aria-hidden="true">📝</div>
+            <div class="profile-quick__text">
+              <div class="profile-quick__title">Post a listing</div>
+              <div class="profile-quick__sub">Sell textbooks, electronics, dorm stuff</div>
+            </div>
+          </a>
+
+          <a class="profile-quick__item" href="#" aria-disabled="true">
+            <div class="profile-quick__icon" aria-hidden="true">📦</div>
+            <div class="profile-quick__text">
+              <div class="profile-quick__title">My listings</div>
+              <div class="profile-quick__sub">Manage your active listings</div>
+            </div>
+          </a>
+
+          <a class="profile-quick__item" href="#" aria-disabled="true">
+            <div class="profile-quick__icon" aria-hidden="true">⭐</div>
+            <div class="profile-quick__text">
+              <div class="profile-quick__title">Saved items</div>
+              <div class="profile-quick__sub">Keep a shortlist of good finds</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="profile-danger">
+          <div class="profile-danger__label">Account</div>
+          <form class="profile-danger__form" action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="profile-danger__btn" type="submit">Log out</button>
+          </form>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  {% include "core/footer.html" %}
 </body>
 </html>

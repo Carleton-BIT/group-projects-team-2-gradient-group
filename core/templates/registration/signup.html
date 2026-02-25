@@ -6,304 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sign Up | Raven's Bargain</title>
 
-  <style>
-    :root{
-      --cu-red:#c8102e;
-      --cu-black:#1d1d1f;
-      --cu-gray:#6b7280;
-      --border:#e5e7eb;
-      --bg:#f6f7f9;
-      --card:#ffffff;
-      --radius:16px;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-      --max: 1120px;
-    }
-
-    *{ box-sizing:border-box; }
-
-    body{
-      margin:0;
-      font-family: Arial, Helvetica, sans-serif;
-      color:#111827;
-      background: var(--bg);
-      min-height: 100vh;
-      display:flex;
-      flex-direction:column;
-    }
-
-    /* Top header */
-    .topline{ height:4px; background: var(--cu-red); }
-    .header{
-      background:#fff;
-      border-bottom:1px solid var(--border);
-    }
-    .header-inner{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 14px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-    }
-    .brand a{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      color:inherit;
-      text-decoration:none;
-    }
-    .brand-mark{
-      width: 40px;
-      height: 40px;
-      display:block;
-    }
-    .brand-title{
-      display:flex;
-      flex-direction:column;
-      line-height:1.1;
-    }
-    .brand-title .uni{
-      font-size: 14px;
-      color: var(--cu-gray);
-      font-weight:700;
-      letter-spacing:.2px;
-    }
-    .brand-title .app{
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing:.2px;
-    }
-
-    .nav{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .nav a{
-      text-decoration:none;
-      font-size: 14px;
-      color:#111827;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid #111827;
-      font-weight:800;
-    }
-    .nav a:hover{ background:#f3f4f6; }
-
-    /* Page */
-    .wrap{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 28px 16px 40px;
-      width:100%;
-      flex: 1;
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
-    }
-
-    .card{
-      width:100%;
-      max-width: 900px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .card-hero{
-      background: linear-gradient(90deg, #b50e28 0%, var(--cu-red) 55%, #e11d48 100%);
-      color:#fff;
-      padding: 18px 20px;
-    }
-    .card-hero h1{
-      margin:0;
-      font-size: 20px;
-      letter-spacing:.2px;
-    }
-    .card-hero p{
-      margin: 6px 0 0;
-      font-size: 13px;
-      opacity:.95;
-      line-height:1.35;
-    }
-
-    .card-body{
-      padding: 18px 20px 22px;
-      display:grid;
-      grid-template-columns: 1.25fr .9fr;
-      gap: 16px;
-    }
-
-    .panel{
-      border:1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      background:#fff;
-    }
-
-    .panel h2{
-      margin:0 0 8px;
-      font-size: 16px;
-      letter-spacing:.2px;
-    }
-
-    .muted{
-      color: var(--cu-gray);
-      font-size: 13px;
-      margin: 0 0 10px;
-      line-height:1.4;
-    }
-
-    /* Form fields */
-    .field{ margin-top: 12px; }
-    label{
-      display:block;
-      font-weight: 800;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-
-    /* IMPORTANT: style BOTH input and select */
-    input, select{
-      width:100%;
-      padding: 12px 12px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 14px;
-      background:#fff;
-      outline:none;
-      appearance: none;
-    }
-
-    /* dropdown arrow */
-    select{
-      background-image:
-        linear-gradient(45deg, transparent 50%, #6b7280 50%),
-        linear-gradient(135deg, #6b7280 50%, transparent 50%);
-      background-position:
-        calc(100% - 18px) calc(50% - 3px),
-        calc(100% - 12px) calc(50% - 3px);
-      background-size: 6px 6px, 6px 6px;
-      background-repeat: no-repeat;
-      padding-right: 38px;
-    }
-
-    input:focus, select:focus{
-      border-color: rgba(200,16,46,.55);
-      box-shadow: 0 0 0 4px rgba(200,16,46,.10);
-    }
-
-    .help{
-      margin-top: 6px;
-      font-size: 12px;
-      color: var(--cu-gray);
-      line-height:1.35;
-    }
-
-    .errorlist{
-      margin: 8px 0 0;
-      padding-left: 18px;
-      color: #7a0015;
-      font-size: 13px;
-    }
-
-    .btn-row{
-      display:flex;
-      gap:12px;
-      margin-top: 16px;
-    }
-    .btn{
-      flex:1;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 12px 14px;
-      border-radius: 999px;
-      font-weight: 900;
-      border: 1px solid transparent;
-      cursor:pointer;
-      font-size: 14px;
-      letter-spacing:.2px;
-      text-decoration:none;
-    }
-    .btn-primary{
-      background: var(--cu-red);
-      color:#fff;
-    }
-    .btn-primary:hover{ filter: brightness(.95); }
-    .btn-secondary{
-      background:#fff;
-      border-color:#111827;
-      color:#111827;
-    }
-    .btn-secondary:hover{ background:#f3f4f6; }
-
-    .bottom-link{
-      margin-top: 12px;
-      font-size: 13px;
-      color: var(--cu-gray);
-    }
-    .bottom-link a{
-      color: var(--cu-red);
-      text-decoration:none;
-      font-weight:900;
-    }
-    .bottom-link a:hover{ text-decoration:underline; }
-
-    /* Footer */
-    .footer{
-      background: #111;
-      color:#e5e7eb;
-    }
-    .footer-inner{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 28px 16px;
-      text-align:center;
-    }
-    .footer-logo{
-      display:block;
-      margin: 0 auto 14px auto;
-      width: 190px;
-      height:auto;
-    }
-    .footer p{
-      margin: 6px 0 0;
-      color:#cbd5e1;
-      font-size: 12px;
-      line-height:1.5;
-    }
-
-    @media (max-width: 900px){
-      .card-body{ grid-template-columns: 1fr; }
-      .nav{ display:none; }
-    }
-  </style>
+  <link rel="stylesheet" href="{% static 'reset.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 
-<body>
+<body class="auth-page">
   <div class="topline"></div>
 
-  <header class="header">
-    <div class="header-inner">
-      <div class="brand">
-        <a href="/">
-          <img class="brand-mark" src="https://cdn.carleton.ca/rds/assets/cu-logos/cu-logo-color-vertical-outlined.svg" alt="Carleton University" />
-          <div class="brand-title">
-            <div class="uni">Carleton University</div>
-            <div class="app">Raven's Bargain</div>
-          </div>
-        </a>
-      </div>
-
-      <nav class="nav">
-        <a href="{% url 'login' %}">Back to Log In</a>
-      </nav>
-    </div>
-  </header>
+  {% include 'core/navbar.html' %}
 
   <main class="wrap">
     <section class="card" aria-label="Create account card">
@@ -313,7 +23,6 @@
       </div>
 
       <div class="card-body">
-        <!-- Left: form -->
         <div class="panel">
           <h2>Register</h2>
           <p class="muted">You will still log in using your <b>username</b> and <b>password</b>.</p>
@@ -329,6 +38,18 @@
             </div>
 
             <div class="field">
+              <label for="{{ form.first_name.id_for_label }}">First Name</label>
+              {{ form.first_name }}
+              {{ form.first_name.errors }}
+            </div>
+
+            <div class="field">
+              <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+              {{ form.last_name }}
+              {{ form.last_name.errors }}
+            </div>
+
+            <div class="field">
               <label for="{{ form.carleton_email.id_for_label }}">Carleton Email</label>
               {{ form.carleton_email }}
               {{ form.carleton_email.errors }}
@@ -339,19 +60,36 @@
               <label for="{{ form.student_number.id_for_label }}">Student Number</label>
               {{ form.student_number }}
               {{ form.student_number.errors }}
-              <div class="help">Digits only (example: 101313237).</div>
+              <div class="help">Digits only (example: 123456789).</div>
             </div>
 
             <div class="field">
-              <label for="{{ form.major.id_for_label }}">Major (optional)</label>
+              <label for="{{ form.major.id_for_label }}">Major</label>
               {{ form.major }}
               {{ form.major.errors }}
+
+              <!-- datalist MUST be in the DOM; putting it right under the input is perfect -->
+              <datalist id="major-list">
+                {% for m in majors %}
+                  <option value="{{ m }}"></option>
+                {% endfor %}
+              </datalist>
+
+              <div class="help">Start typing, then pick from the suggestions.</div>
             </div>
 
             <div class="field">
-              <label for="{{ form.minor.id_for_label }}">Minor (optional)</label>
+              <label for="{{ form.minor.id_for_label }}">Minor</label>
               {{ form.minor }}
               {{ form.minor.errors }}
+
+              <datalist id="minor-list">
+                {% for m in minors %}
+                  <option value="{{ m }}"></option>
+                {% endfor %}
+              </datalist>
+
+              <div class="help">Start typing, then pick from the suggestions.</div>
             </div>
 
             <div class="field">
@@ -377,7 +115,6 @@
           </form>
         </div>
 
-        <!-- Right: info -->
         <aside class="panel">
           <h2>Why we ask for this</h2>
           <p class="muted">Helps keep the marketplace student-only and reduces duplicate accounts.</p>
@@ -391,12 +128,6 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <img class="footer-logo" src="https://cdn.carleton.ca/rds/assets/cu-logos/cu-logo-color-vertical-outlined.svg" alt="Carleton University" />
-      <p>Carleton University — Raven's Bargain</p>
-      <p>© 2026 Gradient Group. All Rights Reserved. This platform is a course project and is not affiliated with Carleton University.</p>
-    </div>
-  </footer>
+  {% include 'core/footer.html' %}
 </body>
 </html>
