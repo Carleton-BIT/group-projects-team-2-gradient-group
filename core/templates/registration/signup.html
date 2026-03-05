@@ -1,0 +1,133 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign Up | Raven's Bargain</title>
+
+  <link rel="stylesheet" href="{% static 'reset.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body class="auth-page">
+  <div class="topline"></div>
+
+  {% include 'core/navbar.html' %}
+
+  <main class="wrap">
+    <section class="card" aria-label="Create account card">
+      <div class="card-hero">
+        <h1>Create account</h1>
+        <p>Raven's Bargain is for Carleton students. Sign up with your Carleton email and student number.</p>
+      </div>
+
+      <div class="card-body">
+        <div class="panel">
+          <h2>Register</h2>
+          <p class="muted">You will still log in using your <b>username</b> and <b>password</b>.</p>
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="field">
+              <label for="{{ form.username.id_for_label }}">Username</label>
+              {{ form.username }}
+              {{ form.username.errors }}
+              <div class="help">Letters, digits and @/./+/-/_ only.</div>
+            </div>
+
+            <div class="field">
+              <label for="{{ form.first_name.id_for_label }}">First Name</label>
+              {{ form.first_name }}
+              {{ form.first_name.errors }}
+            </div>
+
+            <div class="field">
+              <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+              {{ form.last_name }}
+              {{ form.last_name.errors }}
+            </div>
+
+            <div class="field">
+              <label for="{{ form.carleton_email.id_for_label }}">Carleton Email</label>
+              {{ form.carleton_email }}
+              {{ form.carleton_email.errors }}
+              <div class="help">Must end in <b>@cmail.carleton.ca</b> or <b>@carleton.ca</b>.</div>
+            </div>
+
+            <div class="field">
+              <label for="{{ form.student_number.id_for_label }}">Student Number</label>
+              {{ form.student_number }}
+              {{ form.student_number.errors }}
+              <div class="help">Digits only (example: 123456789).</div>
+            </div>
+
+            <div class="field">
+              <label for="{{ form.major.id_for_label }}">Major</label>
+              {{ form.major }}
+              {{ form.major.errors }}
+
+              <!-- datalist MUST be in the DOM; putting it right under the input is perfect -->
+              <datalist id="major-list">
+                {% for m in majors %}
+                  <option value="{{ m }}"></option>
+                {% endfor %}
+              </datalist>
+
+              <div class="help">Start typing, then pick from the suggestions.</div>
+            </div>
+
+            <div class="field">
+              <label for="{{ form.minor.id_for_label }}">Minor</label>
+              {{ form.minor }}
+              {{ form.minor.errors }}
+
+              <datalist id="minor-list">
+                {% for m in minors %}
+                  <option value="{{ m }}"></option>
+                {% endfor %}
+              </datalist>
+
+              <div class="help">Start typing, then pick from the suggestions.</div>
+            </div>
+
+            <div class="field">
+              <label for="{{ form.password1.id_for_label }}">Password</label>
+              {{ form.password1 }}
+              {{ form.password1.errors }}
+            </div>
+
+            <div class="field">
+              <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+              {{ form.password2 }}
+              {{ form.password2.errors }}
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary">Sign Up</button>
+              <a class="btn btn-secondary" href="{% url 'login' %}">Back to Log In</a>
+            </div>
+
+            <div class="bottom-link">
+              Already have an account? <a href="{% url 'login' %}">Log In</a>
+            </div>
+          </form>
+        </div>
+
+        <aside class="panel">
+          <h2>Why we ask for this</h2>
+          <p class="muted">Helps keep the marketplace student-only and reduces duplicate accounts.</p>
+          <ul class="muted" style="margin:0; padding-left:18px;">
+            <li>Carleton email confirms you’re in the community</li>
+            <li>Student number helps prevent duplicate accounts</li>
+            <li>Major/minor helps with optional sorting later</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  {% include 'core/footer.html' %}
+</body>
+</html>

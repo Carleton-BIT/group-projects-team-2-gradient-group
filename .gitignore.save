@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Virtual env
+venv/
+.env
+
+# macOS
+.DS_Store
+
+# Django
+db.sqlite3
+/staticfiles/
+media/
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Virtual env
+venv/
+.env
+
+# macOS
+.DS_Store
+
+# Django
+db.sqlite3
+/staticfiles/
+media/
+

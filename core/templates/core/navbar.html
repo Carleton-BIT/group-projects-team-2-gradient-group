@@ -1,0 +1,39 @@
+{% load static %}
+
+<header class="site-header">
+  <div class="site-header__topline" aria-hidden="true"></div>
+
+  <div class="site-header__inner">
+    <a class="site-header__brand" href="{% url 'index' %}">
+      <img
+        class="site-header__logo"
+        src="https://cdn.carleton.ca/rds/assets/cu-logos/cu-logo-color-right-horiztonal.svg"
+        alt="Carleton University"
+      />
+      <span class="site-header__title">Raven’s Bargain</span>
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary">
+      <a class="site-header__link" href="{% url 'index' %}">Home</a>
+      <a class="site-header__link" href="#" aria-disabled="true">Browse</a>
+
+      {% if user.is_authenticated %}
+        <div class="user-menu">
+          <button class="user-menu__button" type="button">
+            Hello, {{ user.first_name|default:user.username }}
+            <span class="user-menu__chev" aria-hidden="true">▾</span>
+          </button>
+
+          <div class="user-menu__dropdown">
+            <a class="user-menu__item" href="{% url 'profile' %}">Profile</a>
+
+            <form class="user-menu__form" action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button class="user-menu__item user-menu__logout" type="submit">Log out</button>
+            </form>
+          </div>
+        </div>
+      {% endif %}
+    </nav>
+  </div>
+</header>

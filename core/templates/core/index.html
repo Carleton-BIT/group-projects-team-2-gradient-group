@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'core/head.html' %}
+<body>
+{% include 'core/navbar.html' %}
+
+<main class="home">
+  <!-- HERO -->
+  <section class="home-hero">
+    <div class="home-hero__media" aria-hidden="true"></div>
+
+    <div class="home-hero__inner">
+      <div class="home-hero__card">
+        <h1>Raven’s Bargain</h1>
+        <p>A student-to-student marketplace for Carleton. Buy and sell course materials, dorm essentials, and more.</p>
+
+        <div class="home-hero__actions">
+          {% if user.is_authenticated %}
+            <a class="btn btn-primary" href="#" aria-disabled="true">Browse</a>
+            <a class="btn btn-secondary" href="{% url 'profile' %}">Profile</a>
+          {% else %}
+            <a class="btn btn-primary" href="{% url 'signup' %}">Create account</a>
+            <a class="btn btn-secondary" href="{% url 'login' %}">Log in</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK STATS / FEATURE CARDS -->
+  <section class="home-section">
+    <div class="container">
+      <h2 class="section-title">Browse categories</h2>
+
+      <div class="card-grid">
+        <a class="mini-card" href="#">
+          <div class="mini-card__title">Textbooks</div>
+          <div class="mini-card__meta">Find course books for less</div>
+        </a>
+
+        <a class="mini-card" href="#">
+          <div class="mini-card__title">Electronics</div>
+          <div class="mini-card__meta">Chargers, headphones, monitors</div>
+        </a>
+
+        <a class="mini-card" href="#">
+          <div class="mini-card__title">Dorm essentials</div>
+          <div class="mini-card__meta">Kitchen, storage, decor</div>
+        </a>
+
+        <a class="mini-card" href="#">
+          <div class="mini-card__title">Services</div>
+          <div class="mini-card__meta">Tutoring, notes, help</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RED WAVE SECTION (Carleton vibe) -->
+  <section class="home-wave">
+    <div class="home-wave__top" aria-hidden="true"></div>
+
+    <div class="container home-wave__inner">
+      <div class="home-wave__content">
+        <h2>Built for Carleton students</h2>
+        <p>Sign up with your Carleton email and student number to keep the marketplace student-only.</p>
+        <a class="btn btn-secondary btn-secondary--onred" href="{% url 'signup' %}">Get started</a>
+      </div>
+
+      <div class="home-wave__media" aria-hidden="true"></div>
+    </div>
+
+    <div class="home-wave__bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- PLACEHOLDER: LISTINGS -->
+  <section class="home-section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Latest listings</h2>
+        <a class="link" href="#">View all</a>
+      </div>
+
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-card__img" aria-hidden="true"></div>
+          <div class="product-card__body">
+            <div class="product-card__title">Sample Listing</div>
+            <div class="product-card__meta">$25 • Textbooks</div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card__img" aria-hidden="true"></div>
+          <div class="product-card__body">
+            <div class="product-card__title">Sample Listing</div>
+            <div class="product-card__meta">$40 • Electronics</div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card__img" aria-hidden="true"></div>
+          <div class="product-card__body">
+            <div class="product-card__title">Sample Listing</div>
+            <div class="product-card__meta">$10 • Dorm essentials</div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card__img" aria-hidden="true"></div>
+          <div class="product-card__body">
+            <div class="product-card__title">Sample Listing</div>
+            <div class="product-card__meta">$15 • Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% include 'core/footer.html' %}
+</body>
+</html>
