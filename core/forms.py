@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Profile
+from .models import Profile, Listing
 
 MAJOR_CHOICES = [
     ("", "Select a major"),
@@ -146,7 +146,6 @@ class CustomUserCreationForm(UserCreationForm):
         widget=forms.TextInput(attrs={"placeholder": "123456789"}),
     )
 
-    # ✅ searchable inputs (datalist)
     major = forms.CharField(
         required=True,
         label="Major",
@@ -171,6 +170,8 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = (
             "username",
+            "first_name",
+            "last_name",
             "carleton_email",
             "student_number",
             "major",
@@ -191,7 +192,6 @@ class CustomUserCreationForm(UserCreationForm):
             raise forms.ValidationError("Student number must be digits only.")
         return sn
 
-    # ✅ optional: enforce that typed major/minor must be from your lists
     def clean_major(self):
         val = (self.cleaned_data.get("major") or "").strip()
         if not val:
@@ -213,11 +213,8 @@ class CustomUserCreationForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
 
-        # Capitalize names properly
         user.first_name = (self.cleaned_data.get("first_name") or "").strip().title()
         user.last_name = (self.cleaned_data.get("last_name") or "").strip().title()
-
-        # Optional but recommended: force usernames lowercase
         user.username = (self.cleaned_data.get("username") or "").strip().lower()
 
         if commit:
@@ -233,3 +230,44 @@ class CustomUserCreationForm(UserCreationForm):
             },
         )
         return user
+
+
+class ListingForm(forms.ModelForm):
+
+    class Meta:
+        model = Listing
+        fields = [
+            "title",
+            "description",
+            "price",
+            "category",
+            "condition",
+            "location",
+            "image",
+        ]
+
+        widgets = {
+            "title": forms.TextInput(attrs={
+                "placeholder": "e.g. BIOL 1902 textbook",
+            }),
+
+            "description": forms.Textarea(attrs={
+                "placeholder": "Describe the item, condition, course code, pickup details",
+                "rows": 6,
+            }),
+
+            "price": forms.NumberInput(attrs={
+                "placeholder": "25.00",
+                "step": "0.01",
+            }),
+
+            "image": forms.ClearableFileInput(attrs={
+                "accept": "image/*"
+            })
+        }
+
+    def clean_price(self):
+        price = self.cleaned_data.get("price")
+        if price is not None and price < 0:
+            raise forms.ValidationError("Price cannot be negative.")
+        return price

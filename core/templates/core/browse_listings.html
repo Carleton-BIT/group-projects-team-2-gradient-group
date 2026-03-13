@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'core/head.html' %}
+<body>
+{% include 'core/navbar.html' %}
+
+<main class="home">
+  <section class="home-section">
+    <div class="container">
+      <div class="section-head">
+        <h1 class="section-title">Browse listings</h1>
+
+        {% if user.is_authenticated %}
+          <a class="btn btn-primary" href="{% url 'create_listing' %}">Create listing</a>
+        {% endif %}
+      </div>
+
+      <div class="product-grid">
+        {% for listing in listings %}
+          <div class="product-card">
+            {% if listing.image %}
+              <img src="{{ listing.image.url }}" alt="{{ listing.title }}" class="product-card__img">
+            {% else %}
+              <div class="product-card__img" aria-hidden="true"></div>
+            {% endif %}
+
+            <div class="product-card__body">
+              <div class="product-card__title">{{ listing.title }}</div>
+              <div class="product-card__meta">${{ listing.price }} • {{ listing.category }}</div>
+              <p style="margin: 0.75rem 0 0.5rem 0;">{{ listing.description|truncatechars:120 }}</p>
+              <div class="product-card__meta">
+                {{ listing.condition }} • {{ listing.location }}
+              </div>
+              <div class="product-card__meta" style="margin-top: 0.5rem;">
+                Posted by {{ listing.seller.first_name|default:listing.seller.username }}
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="product-card">
+            <div class="product-card__body">
+              <div class="product-card__title">No listings available</div>
+              <div class="product-card__meta">There are no active listings yet.</div>
+
+              {% if user.is_authenticated %}
+                <div style="margin-top: 1rem;">
+                  <a class="btn btn-primary" href="{% url 'create_listing' %}">Post the first listing</a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include 'core/footer.html' %}
+</body>
+</html>

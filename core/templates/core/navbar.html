@@ -15,9 +15,14 @@
 
     <nav class="site-header__nav" aria-label="Primary">
       <a class="site-header__link" href="{% url 'index' %}">Home</a>
-      <a class="site-header__link" href="#" aria-disabled="true">Browse</a>
+      <a class="site-header__link" href="{% url 'browse_listings' %}">Browse</a>
 
       {% if user.is_authenticated %}
+        <!-- CREATE LISTING BUTTON -->
+        <a class="btn btn-primary site-header__create" href="{% url 'create_listing' %}">
+          + Create listing
+        </a>
+
         <div class="user-menu">
           <button class="user-menu__button" type="button">
             Hello, {{ user.first_name|default:user.username }}
@@ -26,6 +31,7 @@
 
           <div class="user-menu__dropdown">
             <a class="user-menu__item" href="{% url 'profile' %}">Profile</a>
+            <a class="user-menu__item" href="{% url 'my_listings' %}">My listings</a>
 
             <form class="user-menu__form" action="{% url 'logout' %}" method="post">
               {% csrf_token %}
@@ -33,6 +39,10 @@
             </form>
           </div>
         </div>
+
+      {% else %}
+        <a class="site-header__link" href="{% url 'login' %}">Login</a>
+        <a class="btn btn-primary" href="{% url 'signup' %}">Sign up</a>
       {% endif %}
     </nav>
   </div>

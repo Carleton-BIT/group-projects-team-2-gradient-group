@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'core/head.html' %}
+<body>
+{% include 'core/navbar.html' %}
+
+<main class="home">
+  <section class="home-section">
+    <div class="container listing-form-wrap">
+      <div class="section-head">
+        <h1 class="section-title">Create listing</h1>
+      </div>
+
+      <div class="listing-form-card">
+        <div class="listing-form-card__body">
+          <form method="post" enctype="multipart/form-data" class="listing-form" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+              <div class="listing-form__errors">
+                {% for error in form.non_field_errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="listing-form__grid">
+              <div class="listing-form__group listing-form__group--full">
+                <label for="{{ form.title.id_for_label }}">Title</label>
+                {{ form.title }}
+                {% for error in form.title.errors %}
+                  <p class="form-error">{{ error }}</p>
+                {% endfor %}
+              </div>
+
+              <div class="listing-form__group listing-form__group--full">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {% for error in form.description.errors %}
+                  <p class="form-error">{{ error }}</p>
+                {% endfor %}
+              </div>
+
+              <div class="listing-form__group">
+                <label for="{{ form.price.id_for_label }}">Price</label>
+                {{ form.price }}
+                {% for error in form.price.errors %}
+                  <p class="form-error">{{ error }}</p>
+                {% endfor %}
+              </div>
+
+              <div class="listing-form__group">
+                <label for="{{ form.category.id_for_label }}">Category</label>
+                {{ form.category }}
+                {% for error in form.category.errors %}
+                  <p class="form-error">{{ error }}</p>
+                {% endfor %}
+              </div>
+
+              <div class="listing-form__group">
+                <label for="{{ form.condition.id_for_label }}">Condition</label>
+                {{ form.condition }}
+                {% for error in form.condition.errors %}
+                  <p class="form-error">{{ error }}</p>
+                {% endfor %}
+              </div>
+
+              <div class="listing-form__group">
+                <label for="{{ form.location.id_for_label }}">Location / pickup area</label>
+                {{ form.location }}
+                {% for error in form.location.errors %}
+                  <p class="form-error">{{ error }}</p>
+                {% endfor %}
+              </div>
+
+              <div class="listing-form__group listing-form__group--full">
+                <label for="{{ form.image.id_for_label }}">Image</label>
+                {{ form.image }}
+                {% for error in form.image.errors %}
+                  <p class="form-error">{{ error }}</p>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="listing-form__actions">
+              <button type="submit" class="btn btn-primary">Post listing</button>
+              <a href="{% url 'index' %}" class="btn btn-secondary btn-secondary--dark">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include 'core/footer.html' %}
+</body>
+</html>

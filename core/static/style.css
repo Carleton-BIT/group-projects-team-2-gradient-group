@@ -902,7 +902,11 @@ body.auth-page select:focus {
 }
 
 .product-card__img{
-  height: 140px;
+  width: 100%;
+  height: 200px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
   background: linear-gradient(135deg, #e5e7eb, #f3f4f6);
 }
 
@@ -919,7 +923,116 @@ body.auth-page select:focus {
   font-size: 13px;
   color: #6b7280;
 }
+/* =========================
+   CREATE / EDIT LISTING FORM
+   ========================= */
 
+.listing-form-wrap{
+  max-width: 860px;
+}
+
+.listing-form-card{
+  border: 1px solid var(--colour-grey);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(10,20,40,.08);
+  overflow: hidden;
+}
+
+.listing-form-card__body{
+  padding: 24px;
+}
+
+.listing-form__grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 16px;
+}
+
+.listing-form__group{
+  display: flex;
+  flex-direction: column;
+}
+
+.listing-form__group--full{
+  grid-column: 1 / -1;
+}
+
+.listing-form__group label{
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.listing-form input[type="text"],
+.listing-form input[type="number"],
+.listing-form input[type="file"],
+.listing-form select,
+.listing-form textarea{
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--colour-dark-grey);
+  border-radius: 12px;
+  font-size: 14px;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.listing-form textarea{
+  min-height: 160px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.listing-form input[type="file"]{
+  padding: 10px 12px;
+  background: #f9fafb;
+}
+
+.listing-form input:focus,
+.listing-form select:focus,
+.listing-form textarea:focus{
+  border-color: rgba(233, 28, 36, .65);
+  box-shadow: 0 0 0 4px rgba(233, 28, 36, .10);
+}
+
+.listing-form__errors{
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(233, 28, 36, .28);
+  border-radius: 12px;
+  background: rgba(233, 28, 36, .06);
+  color: #7a0015;
+  font-size: 14px;
+}
+
+.form-error{
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #b42318;
+}
+
+.listing-form__actions{
+  margin-top: 22px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 700px){
+  .listing-form__grid{
+    grid-template-columns: 1fr;
+  }
+
+  .listing-form-card__body{
+    padding: 18px;
+  }
+}
 /* responsive */
 @media (max-width: 900px){
   .home-hero__media{ height: 360px; }

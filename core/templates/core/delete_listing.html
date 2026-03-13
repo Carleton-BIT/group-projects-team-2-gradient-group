@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'core/head.html' %}
+<body>
+{% include 'core/navbar.html' %}
+
+<main class="home">
+  <section class="home-section">
+    <div class="container" style="max-width: 720px;">
+      <div class="product-card">
+        <div class="product-card__body">
+          <h1 class="section-title" style="margin-bottom: 1rem;">Delete listing</h1>
+          <p>Are you sure you want to delete <strong>{{ listing.title }}</strong>?</p>
+          <p style="margin-top: 0.5rem;">This action cannot be undone.</p>
+
+          <form method="post" style="margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Yes, delete listing</button>
+            <a href="{% url 'my_listings' %}" class="btn btn-secondary">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include 'core/footer.html' %}
+</body>
+</html>
