@@ -178,10 +178,10 @@ body {
   line-height: 1;
 }
 
-.site-header__nav{
-  display:flex;
-  align-items:center;
-  gap: 14px;
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .site-header__link{
