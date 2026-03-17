@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Profile
+from .models import Profile, Product
 
 MAJOR_CHOICES = [
     ("", "Select a major"),
@@ -233,3 +233,32 @@ class CustomUserCreationForm(UserCreationForm):
             },
         )
         return user
+
+class ProductCreateForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+            "title",
+            "author",
+            "course_code",
+            "description",
+            "price",
+            "condition",
+            "image",
+        ]
+        widgets = {
+            "description": forms.Textarea(attrs={"rows": 4}),
+            "title": forms.TextInput(attrs={"placeholder": "Book title"}),
+            "author": forms.TextInput(attrs={"placeholder": "Author name"}),
+            "course_code": forms.TextInput(attrs={"placeholder": "e.g. IRM3004"}),
+            "price": forms.NumberInput(attrs={"step": "0.01", "min": "0"}),
+        }
+
+    def clean_price(self):
+        price = self.cleaned_data["price"]
+        if price <= 0:
+            raise forms.ValidationError("Price must be greater than 0.")
+        return price
+
+    def clean_course_code(self):
+        return self.cleaned_data["course_code"].upper().strip()
