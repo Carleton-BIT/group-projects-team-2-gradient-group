@@ -1,9 +1,9 @@
 from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from .models import Product 
 
 from .forms import CustomUserCreationForm, MAJOR_CHOICES, MINOR_CHOICES, ProductCreateForm
@@ -15,8 +15,30 @@ def profile(request):
 
 
 def index(request):
-    return render(request, "core/index.html")
+    # Start with all products
+    products = Product.objects.all()
+    
+    # Capture the search query and filter from the URL (e.g., ?q=textbook&category=books)
+    search_query = request.GET.get('q', '')
+    category_filter = request.GET.get('category', '')
 
+    # Apply Text Search (looks in title OR description)
+    if search_query:
+        products = products.filter(
+            Q(title__icontains=search_query) | Q(description__icontains=search_query)
+        )
+
+    # Apply Category Filter
+    if category_filter:
+        products = products.filter(category=category_filter)
+
+    # Pass the products and current search terms back to the template
+    context = {
+        'products': products,
+        'search_query': search_query,
+        'category_filter': category_filter,
+    }
+    return render(request, "core/index.html", context)
 
 def signup(request):
     if request.method == "POST":
