@@ -3,6 +3,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Product 
+
 from .forms import CustomUserCreationForm, MAJOR_CHOICES, MINOR_CHOICES, ProductCreateForm
 
 
@@ -47,3 +50,9 @@ def create_product_listing(request):
         form = ProductCreateForm()
 
     return render(request, "core/create_product_listing.html", {"form": form})
+
+
+@login_required
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, "core/product_detail.html", {"product": product})

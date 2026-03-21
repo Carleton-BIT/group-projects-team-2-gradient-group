@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'core/head.html' %}
+<body>
+{% include 'core/navbar.html' %}
+
+<main class="container" style="padding: 40px 0;">
+    <h1>{{ product.title }}</h1>
+    <p><strong>Price:</strong> ${{ product.price }}</p>
+    <p><strong>Condition:</strong> {{ product.get_condition_display }}</p>
+    <p><strong>Description:</strong> {{ product.description }}</p>
+    
+    <a href="mailto:{{ product.seller.profile.carleton_email }}?subject={{ request.user.username }} wants to buy {{ product.title }}" class="btn btn-primary">
+        Contact Seller
+    </a>
+</main>
+
+{% include 'core/footer.html' %}
+</body>
+</html>
