@@ -7,4 +7,6 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("products/create/", views.create_product_listing, name="create_product_listing"),
     path("product/<int:pk>/", views.product_detail, name="product_detail"),
+    path("profile/edit/", views.edit_profile, name="edit_profile"),
+    path("my-listings/", views.my_listings, name="my_listings"),
 ]

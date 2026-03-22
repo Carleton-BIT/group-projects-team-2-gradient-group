@@ -7,7 +7,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     carleton_email = models.EmailField(unique=True)
-    student_number = models.CharField(max_length=32, unique=True)
+    student_number = models.CharField(max_length=32, unique=True, blank=True, null=True)
 
     major = models.CharField(max_length=100, blank=True, default="")
     minor = models.CharField(max_length=100, blank=True, default="")
