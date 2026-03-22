@@ -1,29 +1,26 @@
 :root {
   /* Core colours */
-  --colour-carleton-red: #E91C24;
-  /* https://coolors.co/palette/f8f9fa-e9ecef-dee2e6-ced4da-adb5bd-6c757d-495057-343a40-212529 */
-  --colour-white: #f8f9fa;
-  --colour-light-grey: #e9ecef;
-  --colour-grey: #dee2e6;
-  --colour-dark-grey: #ced4da;
-  --colour-darker-grey: #adb5bd;
-  --colour-dark: #343a40;
-  --colour-darker: #212529;
-  --colour-carleton-black: #191919;
-
-  /* https://coolors.co/palette/e63946-f1faee-a8dadc-457b9d-1d3557 */
-  --colour-amaranth: #e63946;
-  --colour-peppermint: #f1faee;
-  --colour-aquaisland: #a8dadc;
-  --colour-wedgewood: #457b9d;
-  --colour-cello: #1d3557;
+  --colour-carleton-red: #BF112B;
+  /* RDS Neutral Palette: https://ravendesignsystem.github.io/rds/design/colours/ */
+  --colour-white: #FFFFFF;
+  --colour-light-grey: #EAEAEA;
+  --colour-grey: #DFDFDF;
+  --colour-dark-grey: #B1B1B1;
+  --colour-darker-grey: #939393;
+  --colour-dark: #535353;
+  --colour-darker: #222222;
+  --colour-carleton-black: #000000;
 
   /* Header configuration */
   --header-heading-colour: var(--colour-white);
 
   /* Body configuration */
   --body-default-colour: var(--colour-carleton-black);
-  --body-background-colour: var(--colour-white);
+  --body-background-colour: var(--colour-light-grey);
+
+  /* RDS link colours */
+  --cu-link: #105F83;
+  --cu-link-hover: #BF112B;
 }
 
 /* base */
@@ -49,6 +46,7 @@ img { max-width: 100%; height: auto; }
 */
 body {
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
   color: var(--body-default-colour);
   background-color: var(--body-background-colour);
 }
@@ -88,7 +86,7 @@ body {
   justify-content: center;
   padding: 10px 14px;
   border-radius: 999px;
-  font-weight: 800;
+  font-weight: 500;
   text-decoration: none;
   border: 1px solid transparent;
   cursor: pointer;
@@ -111,20 +109,20 @@ body {
 
 /* Secondary used on red sections */
 .btn-secondary--onred{
-  border-color: #111827;
-  color: #111827;
+  border-color: #222222;
+  color: #222222;
   background: #fff;
 }
-.btn-secondary--onred:hover{ background: #f3f4f6; }
+.btn-secondary--onred:hover{ background: #EAEAEA; }
 
 /* Secondary used on light pages (profile, etc.) */
 .btn-secondary--dark{
   background: #fff;
-  border-color: #111827 !important;
-  color: #111827 !important;
+  border-color: #222222 !important;
+  color: #222222 !important;
 }
 .btn-secondary--dark:hover{
-  background: #f3f4f6;
+  background: #EAEAEA;
 }
 
 /* =========================
@@ -171,7 +169,7 @@ body {
 }
 
 .site-header__title{
-  font-weight: 900;
+  font-weight: 500;
   font-size: 22px;
   letter-spacing: .2px;
   color: var(--colour-carleton-black);
@@ -186,15 +184,15 @@ body {
 
 .site-header__link{
   text-decoration:none;
-  font-weight: 800;
+  font-weight: 500;
   font-size: 14px;
-  color: #111827;
+  color: #222222;
   padding: 8px 10px;
   border-radius: 10px;
 }
 
 .site-header__link:hover{
-  background: #f3f4f6;
+  background: #EAEAEA;
 }
 
 /* =========================
@@ -208,10 +206,10 @@ body {
 .user-menu__button{
   border: 1px solid var(--colour-grey);
   background: #ffffff;
-  color: #111827;
+  color: #222222;
   border-radius: 999px;
   padding: 8px 12px;
-  font-weight: 900;
+  font-weight: 500;
   font-size: 14px;
   cursor: pointer;
   display:flex;
@@ -220,7 +218,7 @@ body {
 }
 
 .user-menu__button:hover{
-  background: #f3f4f6;
+  background: #EAEAEA;
 }
 
 .user-menu__chev{
@@ -257,14 +255,14 @@ body {
   text-decoration:none;
   background: transparent;
   border: none;
-  color: #111827;
-  font-weight: 800;
+  color: #222222;
+  font-weight: 500;
   font-size: 14px;
   cursor: pointer;
 }
 
 .user-menu__item:hover{
-  background: #f3f4f6;
+  background: #EAEAEA;
 }
 
 .user-menu__logout{
@@ -287,14 +285,14 @@ body {
 
 /* auth-only variables (scoped so it DOESN'T overwrite global :root) */
 body.auth-page {
-  --cu-red: var(--colour-carleton-red, #c8102e);
-  --bg: #f5f6f8;
-  --border: #e5e7eb;
-  --text-gray: #6b7280;
+  --cu-red: var(--colour-carleton-red, #BF112B);
+  --bg: #F3F3F3;
+  --border: #DFDFDF;
+  --text-gray: #767676;
   --max: 1120px;
 
-  --cu-black: #1d1d1f;
-  --cu-gray: #6b7280;
+  --cu-black: #222222;
+  --cu-gray: #767676;
   --card: #ffffff;
   --radius: 16px;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -305,7 +303,7 @@ body.auth-page {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background: var(--bg);
-  color: #111827;
+  color: #222222;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -358,13 +356,13 @@ body.auth-page .header img {
 
 .brand-text .uni {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-gray);
 }
 
 .brand-text .app {
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 500;
 }
 
 /* header buttons (login page uses these) */
@@ -373,7 +371,7 @@ body.auth-page .header img {
   margin-left: 10px;
   padding: 8px 14px;
   border-radius: 999px;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 14px;
   display: inline-flex;
   align-items: center;
@@ -381,8 +379,8 @@ body.auth-page .header img {
 }
 
 .btn-outline {
-  border: 1px solid #111827;
-  color: #111827;
+  border: 1px solid #222222;
+  color: #222222;
 }
 
 .btn-red {
@@ -419,7 +417,7 @@ body.auth-page .header img {
 .login-card label {
   display: block;
   margin-top: 15px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .login-card input {
@@ -438,7 +436,7 @@ body.auth-page .header img {
   color: #ffffff;
   border: none;
   border-radius: 999px;
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -454,7 +452,7 @@ body.auth-page .header img {
 
 .signup-text a {
   color: var(--cu-red);
-  font-weight: 700;
+  font-weight: 500;
   text-decoration: none;
 }
 .signup-text a:hover {
@@ -484,7 +482,7 @@ body.auth-page .header img {
 }
 
 .card-hero {
-  background: linear-gradient(90deg, #b50e28 0%, var(--cu-red) 55%, #e11d48 100%);
+  background: linear-gradient(90deg, #8c0d1f 0%, var(--cu-red) 55%, #c4102a 100%);
   color: #fff;
   padding: 18px 20px;
 }
@@ -536,7 +534,7 @@ body.auth-page .header img {
 /* keep auth form label styling scoped */
 body.auth-page label {
   display: block;
-  font-weight: 800;
+  font-weight: 500;
   font-size: 13px;
   margin-bottom: 8px;
 }
@@ -555,8 +553,8 @@ body.auth-page select {
 }
 
 body.auth-page select {
-  background-image: linear-gradient(45deg, transparent 50%, #6b7280 50%),
-    linear-gradient(135deg, #6b7280 50%, transparent 50%);
+  background-image: linear-gradient(45deg, transparent 50%, #767676 50%),
+    linear-gradient(135deg, #767676 50%, transparent 50%);
   background-position: calc(100% - 18px) calc(50% - 3px),
     calc(100% - 12px) calc(50% - 3px);
   background-size: 6px 6px, 6px 6px;
@@ -566,8 +564,8 @@ body.auth-page select {
 
 body.auth-page input:focus,
 body.auth-page select:focus {
-  border-color: rgba(200, 16, 46, 0.55);
-  box-shadow: 0 0 0 4px rgba(200, 16, 46, 0.1);
+  border-color: rgba(191, 17, 43, 0.55);
+  box-shadow: 0 0 0 4px rgba(191, 17, 43, 0.1);
 }
 
 .help {
@@ -595,13 +593,13 @@ body.auth-page select:focus {
    ========================= */
 
 .site-footer{
-  background:#111;
-  color:#e5e7eb;
+  background:#222222;
+  color:#EAEAEA;
   margin-top: 2rem;
 }
 
 .site-footer a{
-  color:#e5e7eb;
+  color:#EAEAEA;
   text-decoration:none;
 }
 .site-footer a:hover{
@@ -616,7 +614,7 @@ body.auth-page select:focus {
   font-size: 14px;
   line-height: 1.5;
   text-align: center;
-  color:#f3f4f6;
+  color:#ffffff;
 }
 
 .site-footer__inner{
@@ -643,14 +641,14 @@ body.auth-page select:focus {
 }
 
 .site-footer__brandtitle{
-  font-weight: 800;
+  font-weight: 500;
   font-size: 18px;
   margin-bottom: 2px;
 }
 
 .site-footer__brandsubtitle{
   font-size: 13px;
-  color:#cbd5e1;
+  color:#B1B1B1;
 }
 
 .site-footer__cols{
@@ -663,7 +661,7 @@ body.auth-page select:focus {
 .site-footer__col h3{
   margin: 0 0 10px;
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 500;
   letter-spacing: .3px;
   color:#ffffff;
 }
@@ -676,14 +674,14 @@ body.auth-page select:focus {
 
 .site-footer__col li{
   font-size: 13px;
-  color:#cbd5e1;
+  color:#B1B1B1;
   margin-bottom: 10px;
   line-height: 1.5;
 }
 
 .site-footer__col li span{
-  color:#e5e7eb;
-  font-weight: 700;
+  color:#EAEAEA;
+  font-weight: 500;
 }
 
 .site-footer__bottom{
@@ -699,11 +697,11 @@ body.auth-page select:focus {
   gap: 10px 18px;
   justify-content: space-between;
   font-size: 12px;
-  color:#cbd5e1;
+  color:#B1B1B1;
 }
 
 .site-footer__note{
-  color:#94a3b8;
+  color:#939393;
 }
 
 /* responsive */
@@ -734,7 +732,7 @@ body.auth-page select:focus {
 .home-hero__media{
   height: 420px;
   background:
-    linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.15) 60%, rgba(255,255,255,1) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.50) 0%, rgba(0,0,0,.20) 100%),
     url("https://carleton.ca/academic-plan/wp-content/uploads/P_CarletonPhotography_CampusBuildings_280322-1-1-1600x700.jpg");
   background-size: cover;
   background-position: center;
@@ -750,7 +748,7 @@ body.auth-page select:focus {
 .home-hero__card{
   max-width: 520px;
   margin-left: 16px;
-  background: rgba(17,17,17,.85);
+  background: rgba(34,34,34,.85);
   color: #fff;
   padding: 18px 18px 16px;
   border-radius: 14px;
@@ -784,7 +782,7 @@ body.auth-page select:focus {
 .section-title{
   margin: 0 0 14px;
   font-size: 18px;
-  font-weight: 900;
+  font-weight: 500;
   color: var(--colour-carleton-black);
 }
 
@@ -797,11 +795,14 @@ body.auth-page select:focus {
 }
 
 .link{
-  font-weight: 800;
-  color: var(--colour-carleton-red);
+  font-weight: 500;
+  color: var(--cu-link);
   text-decoration: none;
 }
-.link:hover{ text-decoration: underline; }
+.link:hover{
+  color: var(--cu-link-hover);
+  text-decoration: underline;
+}
 
 /* MINI CARDS */
 .card-grid{
@@ -827,13 +828,13 @@ body.auth-page select:focus {
 }
 
 .mini-card__title{
-  font-weight: 900;
+  font-weight: 500;
   margin-bottom: 6px;
 }
 
 .mini-card__meta{
   font-size: 13px;
-  color: #6b7280;
+  color: #767676;
   line-height: 1.4;
 }
 
@@ -865,7 +866,7 @@ body.auth-page select:focus {
 .home-wave__content h2{
   margin: 0 0 8px;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 500;
 }
 
 .home-wave__content p{
@@ -903,7 +904,7 @@ body.auth-page select:focus {
 
 .product-card__img{
   height: 140px;
-  background: linear-gradient(135deg, #e5e7eb, #f3f4f6);
+  background: linear-gradient(135deg, #DFDFDF, #F3F3F3);
 }
 
 .product-card__body{
@@ -911,13 +912,13 @@ body.auth-page select:focus {
 }
 
 .product-card__title{
-  font-weight: 900;
+  font-weight: 500;
   margin-bottom: 6px;
 }
 
 .product-card__meta{
   font-size: 13px;
-  color: #6b7280;
+  color: #767676;
 }
 
 /* responsive */
@@ -960,10 +961,10 @@ body.auth-page select:focus {
   border-radius: 18px;
   display: grid;
   place-items: center;
-  font-weight: 900;
+  font-weight: 500;
   font-size: 28px;
   color: #fff;
-  background: linear-gradient(135deg, #0b4aa2, var(--colour-carleton-red));
+  background: var(--colour-carleton-red);
   box-shadow: 0 18px 40px rgba(10,20,40,.15);
 }
 
@@ -971,7 +972,7 @@ body.auth-page select:focus {
   margin: 0;
   font-size: 26px;
   letter-spacing: .2px;
-  color: #111827;
+  color: #222222;
 }
 
 .profile-hero__meta{
@@ -987,10 +988,10 @@ body.auth-page select:focus {
   padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid var(--colour-grey);
-  background: #f9fafb;
-  font-weight: 800;
+  background: #F3F3F3;
+  font-weight: 500;
   font-size: 12px;
-  color: #111827;
+  color: #222222;
 }
 
 .profile-hero__actions{
@@ -1030,14 +1031,14 @@ body.auth-page select:focus {
 .profile-card__title{
   margin: 0;
   font-size: 16px;
-  font-weight: 900;
-  color: #111827;
+  font-weight: 500;
+  color: #222222;
 }
 
 .profile-card__sub{
   margin: 6px 0 0;
   font-size: 13px;
-  color: #6b7280;
+  color: #767676;
   line-height: 1.35;
 }
 
@@ -1051,21 +1052,21 @@ body.auth-page select:focus {
 .profile-kv{
   border: 1px solid var(--colour-grey);
   border-radius: 14px;
-  background: #fafbff;
+  background: #F3F3F3;
   padding: 12px;
 }
 
 .profile-kv__k{
   font-size: 12px;
-  color: #6b7280;
-  font-weight: 800;
+  color: #767676;
+  font-weight: 500;
 }
 
 .profile-kv__v{
   margin-top: 6px;
   font-size: 14px;
-  font-weight: 900;
-  color: #111827;
+  font-weight: 500;
+  color: #222222;
 }
 
 .profile-kv__v--break{
@@ -1085,7 +1086,7 @@ body.auth-page select:focus {
   border-radius: 14px;
   padding: 12px;
   background: #fff;
-  color: #374151;
+  color: #535353;
 }
 
 .profile-tip__icon{
@@ -1096,8 +1097,8 @@ body.auth-page select:focus {
 .profile-tip__text{
   font-size: 13px;
   line-height: 1.45;
-  font-weight: 700;
-  color: #374151;
+  font-weight: 500;
+  color: #535353;
 }
 
 .profile-actions-row{
@@ -1130,7 +1131,7 @@ body.auth-page select:focus {
 }
 
 .profile-quick__item:hover{
-  background: #f3f4f6;
+  background: #F3F3F3;
 }
 
 .profile-quick__icon{
@@ -1139,36 +1140,36 @@ body.auth-page select:focus {
   border-radius: 12px;
   display: grid;
   place-items: center;
-  background: #111827;
+  background: #222222;
   color: #fff;
   font-size: 16px;
 }
 
 .profile-quick__title{
-  font-weight: 900;
+  font-weight: 500;
   font-size: 14px;
-  color: #111827;
+  color: #222222;
 }
 
 .profile-quick__sub{
   margin-top: 2px;
   font-size: 12px;
-  color: #6b7280;
+  color: #767676;
   line-height: 1.35;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .profile-danger{
   margin: 10px 12px 14px;
   padding: 12px;
   border-radius: 14px;
-  border: 1px solid rgba(233, 28, 36, .35);
-  background: rgba(233, 28, 36, .06);
+  border: 1px solid rgba(191, 17, 43, .35);
+  background: rgba(191, 17, 43, .06);
 }
 
 .profile-danger__label{
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 500;
   color: #7a0015;
   margin-bottom: 10px;
 }
@@ -1183,7 +1184,7 @@ body.auth-page select:focus {
   cursor: pointer;
   padding: 10px 12px;
   border-radius: 999px;
-  font-weight: 900;
+  font-weight: 500;
   background: var(--colour-carleton-red);
   color: #fff;
 }
