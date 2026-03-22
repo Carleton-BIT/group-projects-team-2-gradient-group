@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf61a849-00e0-4c3b-a754-d87330ed4a8b" name="Changes" comment="added user registration and login">
+    <list default="true" id="cf61a849-00e0-4c3b-a754-d87330ed4a8b" name="Changes" comment="Made homepage compatible with products">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/core/create_product_listing.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/create_product_listing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/core/static/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/templates/core/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/templates/core/product_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/product_detail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +141,7 @@
       <workItem from="1772751024285" duration="2111000" />
       <workItem from="1773004673902" duration="1875000" />
       <workItem from="1773749033907" duration="5223000" />
-      <workItem from="1774208463481" duration="799000" />
+      <workItem from="1774208463481" duration="1767000" />
     </task>
     <task id="LOCAL-00001" summary="Added">
       <option name="closed" value="true" />
@@ -263,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771535835972</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Made homepage compatible with products">
+      <option name="closed" value="true" />
+      <created>1774209357540</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1774209357540</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,7 +309,8 @@
     <MESSAGE value="added stuff" />
     <MESSAGE value="updated ignore" />
     <MESSAGE value="added user registration and login" />
-    <option name="LAST_COMMIT_MESSAGE" value="added user registration and login" />
+    <MESSAGE value="Made homepage compatible with products" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made homepage compatible with products" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/group_projects_team_2_gradient_group$views.coverage" NAME="views Coverage Results" MODIFIED="1771533339443" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />

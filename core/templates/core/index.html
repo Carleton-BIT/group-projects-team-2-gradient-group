@@ -98,18 +98,29 @@
               <a href="{% url 'index' %}" class="btn btn-secondary" style="padding: 10px 20px;">Clear</a>
           </form>
       </div>
-
+      <div class="section-head">
+        <h2 class="section-title">Latest listings</h2>
+        <a class="link" href="#">View all</a>
+      </div>
       <div class="product-grid">
         {% for product in products %}
-          <div class="product-card">
-            <div class="product-card__img" aria-hidden="true"></div>
-            <div class="product-card__body">
-              <div class="product-card__title">
-                  <a href="{% url 'product_detail' product.pk %}" style="text-decoration: none; color: inherit;">{{ product.title }}</a>
-              </div>
-              <div class="product-card__meta">${{ product.price }} • {{ product.get_category_display|default:product.category }}</div>
-            </div>
-          </div>
+            <a href="{% url 'product_detail' product.pk %}" style="text-decoration: none; color: inherit;">
+                <div class="product-card">
+                    {% if product.image %}
+                        <img class="product-card__img" src="{{ product.image.url }}" alt="{{ product.title }}">
+                    {% else %}
+                        <div class="product-card__img" aria-hidden="true"></div>
+                    {% endif %}
+                    <div class="product-card__body">
+                        <div class="product-card__title">
+                            {{ product.title }}
+                        </div>
+                        <div class="product-card__meta">
+                            ${{ product.price }} • {{ product.get_category_display|default:product.category }}
+                        </div>
+                    </div>
+                </div>
+            </a>
         {% empty %}
           <p style="padding: 20px 0;">No products found matching your search. Try clearing your filters!</p>
         {% endfor %}
@@ -120,8 +131,8 @@
   <hr style="margin: 40px 0; border: 1px solid #eaeaea;"> ```
 
 
+<!--
 
-  <!-- PLACEHOLDER: LISTINGS -->
   <section class="home-section">
     <div class="container">
       <div class="section-head">
@@ -164,6 +175,7 @@
       </div>
     </div>
   </section>
+-->
 </main>
 {% include 'core/footer.html' %}
 </body>
