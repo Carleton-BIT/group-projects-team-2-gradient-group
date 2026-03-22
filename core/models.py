@@ -24,6 +24,13 @@ class Product(models.Model):
         ("poor", "Poor"),
     ]
 
+    CATEGORY_CHOICES = [
+        ("textbooks", "Textbooks"),
+        ("electronics", "Electronics"),
+        ("dorm_essentials", "Dorm Essentials"),
+        ("services", "Services"),
+    ]
+
     seller = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -34,6 +41,7 @@ class Product(models.Model):
     course_code = models.CharField(max_length=20, blank=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=8, decimal_places=2)
+    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES)
     condition = models.CharField(max_length=20, choices=CONDITION_CHOICES)
     image = models.ImageField(upload_to="product_images/", blank=True, null=True)
     is_available = models.BooleanField(default=True)

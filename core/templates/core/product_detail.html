@@ -5,15 +5,70 @@
 <body>
 {% include 'core/navbar.html' %}
 
-<main class="container" style="padding: 40px 0;">
-    <h1>{{ product.title }}</h1>
-    <p><strong>Price:</strong> ${{ product.price }}</p>
-    <p><strong>Condition:</strong> {{ product.get_condition_display }}</p>
-    <p><strong>Description:</strong> {{ product.description }}</p>
-    
-    <a href="mailto:{{ product.seller.profile.carleton_email }}?subject={{ request.user.username }} wants to buy {{ product.title }}" class="btn btn-primary">
-        Contact Seller
-    </a>
+<main class="container product-detail-page">
+    <div class="product-detail-card">
+        <div class="product-detail-image-wrap">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-detail-image">
+            {% else %}
+                <div class="product-detail-placeholder">
+                    No image available
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="product-detail-content">
+            {% if product.category %}
+                <div class="product-category-badge">
+                    {{ product.get_category_display }}
+                </div>
+            {% endif %}
+
+            <h1 class="product-title">{{ product.title }}</h1>
+            <div class="product-price">${{ product.price }}</div>
+
+            <div class="product-meta">
+                <div class="product-meta-box">
+                    <span class="product-meta-label">Condition</span>
+                    <span class="product-meta-value">{{ product.get_condition_display }}</span>
+                </div>
+
+                <div class="product-meta-box">
+                    <span class="product-meta-label">Seller</span>
+                    <span class="product-meta-value">{{ product.seller.username }}</span>
+                </div>
+
+                {% if product.author %}
+                <div class="product-meta-box">
+                    <span class="product-meta-label">Author</span>
+                    <span class="product-meta-value">{{ product.author }}</span>
+                </div>
+                {% endif %}
+
+                {% if product.course_code %}
+                <div class="product-meta-box">
+                    <span class="product-meta-label">Course Code</span>
+                    <span class="product-meta-value">{{ product.course_code }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="product-description-card">
+                <div class="product-description-title">Description</div>
+                <p class="product-description-text">{{ product.description }}</p>
+            </div>
+
+            <div class="product-actions">
+                <a href="mailto:{{ product.seller.profile.carleton_email }}?subject={{ request.user.username }} wants to buy {{ product.title }}" class="product-btn product-btn-primary">
+                    Contact Seller
+                </a>
+
+                <a href="{% url 'index' %}" class="product-btn product-btn-secondary">
+                    Back to Listings
+                </a>
+            </div>
+        </div>
+    </div>
 </main>
 
 {% include 'core/footer.html' %}

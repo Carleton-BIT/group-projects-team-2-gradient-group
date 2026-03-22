@@ -243,6 +243,7 @@ class ProductCreateForm(forms.ModelForm):
             "course_code",
             "description",
             "price",
+            "category",
             "condition",
             "image",
         ]
@@ -252,6 +253,7 @@ class ProductCreateForm(forms.ModelForm):
             "author": forms.TextInput(attrs={"placeholder": "Author name"}),
             "course_code": forms.TextInput(attrs={"placeholder": "e.g. IRM3004"}),
             "price": forms.NumberInput(attrs={"step": "0.01", "min": "0"}),
+            "category": forms.Select(),
         }
 
     def clean_price(self):
