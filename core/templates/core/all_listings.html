@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'core/head.html' %}
+<body>
+{% include 'core/navbar.html' %}
+
+<main class="container" style="padding: 40px 0;">
+    <div class="section-head" style="margin-bottom: 24px;">
+        <h1 class="section-title">All Listings</h1>
+        <a class="link" href="{% url 'index' %}">Back home</a>
+    </div>
+
+    <div class="search-container" style="margin-bottom: 30px;">
+        <form method="GET" action="{% url 'all_listings' %}" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input
+                type="text"
+                name="q"
+                value="{{ search_query }}"
+                placeholder="Search for items..."
+                class="form-control"
+                style="flex: 1; min-width: 240px; padding: 10px; border-radius: 5px; border: 1px solid #ccc;"
+            >
+
+            <select name="category" class="form-select" style="width: 220px; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                <option value="">All Categories</option>
+                <option value="textbooks" {% if category_filter == 'textbooks' %}selected{% endif %}>Textbooks</option>
+                <option value="electronics" {% if category_filter == 'electronics' %}selected{% endif %}>Electronics</option>
+                <option value="dorm_essentials" {% if category_filter == 'dorm_essentials' %}selected{% endif %}>Dorm essentials</option>
+                <option value="services" {% if category_filter == 'services' %}selected{% endif %}>Services</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary" style="padding: 10px 20px;">Search</button>
+            <a href="{% url 'all_listings' %}" class="btn btn-secondary" style="padding: 10px 20px;">Clear</a>
+        </form>
+    </div>
+
+    <div class="product-grid">
+        {% for product in products %}
+            <a href="{% url 'product_detail' product.pk %}" style="text-decoration: none; color: inherit;">
+                <div class="product-card">
+                    {% if product.image %}
+                        <img class="product-card__img" src="{{ product.image.url }}" alt="{{ product.title }}">
+                    {% else %}
+                        <div class="product-card__img" aria-hidden="true"></div>
+                    {% endif %}
+
+                    <div class="product-card__body">
+                        <div class="product-card__title">{{ product.title }}</div>
+                        <div class="product-card__meta">
+                            ${{ product.price }} • {{ product.get_category_display }}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% empty %}
+            <p>No listings found.</p>
+        {% endfor %}
+    </div>
+</main>
+
+{% include 'core/footer.html' %}
+</body>
+</html>

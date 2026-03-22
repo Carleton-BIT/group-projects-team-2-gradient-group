@@ -824,7 +824,8 @@ body.auth-page select:focus {
 
 .mini-card:hover{
   border-color: var(--colour-dark-grey);
-  box-shadow: 0 12px 30px rgba(10,20,40,.10);
+  box-shadow: 0 16px 36px rgba(10,20,40,.14);
+  transform: translateY(-6px);
 }
 
 .mini-card__title{
@@ -880,8 +881,8 @@ body.auth-page select:focus {
   height: 180px;
   border-radius: 14px;
   background:
-    linear-gradient(135deg, rgba(0,0,0,.18), rgba(0,0,0,0)),
-    url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=60");
+          linear-gradient(135deg, rgba(0,0,0,.18), rgba(0,0,0,0)),
+          url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=60");
   background-size: cover;
   background-position: center;
   border: 1px solid rgba(255,255,255,.25);
@@ -900,6 +901,12 @@ body.auth-page select:focus {
   overflow: hidden;
   background: #fff;
   box-shadow: 0 10px 24px rgba(10,20,40,.06);
+}
+
+.product-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(10,20,40,.12);
+  border-color: var(--colour-dark-grey);
 }
 
 .product-card__img{
@@ -1089,6 +1096,18 @@ body.auth-page select:focus {
   background: #e2e8f0;
 }
 
+.product-btn-danger-outline {
+    background: transparent;
+    color: var(--colour-carleton-red);
+    border: 1px solid var(--colour-carleton-red);
+    cursor: pointer;
+}
+
+.product-btn-danger-outline:hover {
+    background: #dc2626;
+    color: #fff;
+}
+
  @media (max-width: 900px) {
    .product-detail-card {
      grid-template-columns: 1fr;
@@ -1107,7 +1126,35 @@ body.auth-page select:focus {
   grid-template-columns: 1fr;
 }
 
-/* responsive */
+.save-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.star-icon {
+    width: 26px;
+    height: 26px;
+    color: #9ca3af;
+    transition: transform 0.2s ease, color 0.2s ease;
+    position: relative;
+    top: 7px;
+}
+
+.save-btn:hover .star-icon {
+    transform: scale(1.15);
+    color: #f59e0b;
+}
+
+.star-icon.saved {
+    color: #f59e0b;
+    fill: #f59e0b;
+}
+
 @media (max-width: 900px){
   .home-hero__media{ height: 360px; }
   .card-grid{ grid-template-columns: 1fr 1fr; }
