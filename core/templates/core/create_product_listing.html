@@ -5,61 +5,88 @@
 <body>
 {% include 'core/navbar.html' %}
 {% block content %}
-  <h1>Create Product Listing</h1>
+<main class="listing-page">
+  <div class="listing-wrapper">
+    <div class="listing-card">
+      <div class="listing-card__header">
+        <h1 class="listing-card__title">Create Product Listing</h1>
+        <p class="listing-card__subtitle">
+          Add the details for your item so other Carleton students can find it easily.
+        </p>
+      </div>
 
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+      <form method="post" enctype="multipart/form-data" class="listing-form">
+        {% csrf_token %}
 
-    {{ form.non_field_errors }}
+        {% if form.non_field_errors %}
+          <div class="form-errors-global">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
 
-    <div>
-      {{ form.title.label_tag }}
-      {{ form.title }}
-      {{ form.title.errors }}
+        <div class="form-grid">
+          <div class="form-group form-group--full">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+            {{ form.title.errors }}
+          </div>
+
+          <div class="form-group">
+            {{ form.author.label_tag }}
+            {{ form.author }}
+            {{ form.author.errors }}
+            <div class="form-help">Useful for books, notes, or course materials.</div>
+          </div>
+
+          <div class="form-group">
+            {{ form.course_code.label_tag }}
+            {{ form.course_code }}
+            {{ form.course_code.errors }}
+            <div class="form-help">Example: IRM3007 or HIST2004A.</div>
+          </div>
+
+          <div class="form-group form-group--full">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {{ form.description.errors }}
+          </div>
+
+          <div class="form-group">
+            {{ form.price.label_tag }}
+            {{ form.price }}
+            {{ form.price.errors }}
+          </div>
+
+          <div class="form-group">
+            {{ form.category.label_tag }}
+            {{ form.category }}
+            {{ form.category.errors }}
+          </div>
+
+          <div class="form-group">
+            {{ form.condition.label_tag }}
+            {{ form.condition }}
+            {{ form.condition.errors }}
+          </div>
+
+          <div class="form-group">
+            {{ form.image.label_tag }}
+            {{ form.image }}
+            {{ form.image.errors }}
+            <div class="form-help">Upload a clear photo to help your listing stand out.</div>
+          </div>
+        </div>
+
+        <div class="listing-form__actions">
+          <button type="submit" class="listing-btn listing-btn-primary">Create Listing</button>
+          <a href="{% url 'index' %}" class="listing-btn listing-btn-secondary">Cancel</a>
+        </div>
+      </form>
     </div>
+  </div>
+</main>
 
-    <div>
-      {{ form.author.label_tag }}
-      {{ form.author }}
-      {{ form.author.errors }}
-    </div>
-
-    <div>
-      {{ form.course_code.label_tag }}
-      {{ form.course_code }}
-      {{ form.course_code.errors }}
-    </div>
-
-    <div>
-      {{ form.description.label_tag }}
-      {{ form.description }}
-      {{ form.description.errors }}
-    </div>
-
-    <div>
-      {{ form.price.label_tag }}
-      {{ form.price }}
-      {{ form.price.errors }}
-    </div>
-
-    <div>
-      {{ form.category.label_tag }}
-      {{ form.category }}
-      {{ form.category.errors }}
-    </div>
-
-    <div>
-      {{ form.condition.label_tag }}
-      {{ form.condition }}
-      {{ form.condition.errors }}
-    </div>
-
-    <div>
-      {{ form.image.label_tag }}
-      {{ form.image }}
-      {{ form.image.errors }}
-    </div>
-
-    <button type="submit">Create Listing</button>
-  </form>
+{% include 'core/footer.html' %}
+</body>
+</html>
 {% endblock %}
