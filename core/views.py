@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
-from .models import Product, Profile
+from .models import Product, Profile, SavedProduct
 
 from .forms import CustomUserCreationForm, MAJOR_CHOICES, MINOR_CHOICES, ProductCreateForm, UserUpdateForm, ProfileUpdateForm
 
@@ -111,4 +111,73 @@ def create_product_listing(request):
 @login_required
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    return render(request, "core/product_detail.html", {"product": product})
+
+    is_saved = False
+    if request.user.is_authenticated:
+        is_saved = SavedProduct.objects.filter(
+            user=request.user,
+            product=product
+        ).exists()
+
+    return render(request, "core/product_detail.html", {
+        "product": product,
+        "is_saved": is_saved,
+    })
+
+def all_listings(request):
+    products = Product.objects.filter(is_available=True).order_by("-created_at")
+
+    search_query = request.GET.get("q", "")
+    category_filter = request.GET.get("category", "")
+
+    if search_query:
+        products = products.filter(title__icontains=search_query)
+
+    if category_filter:
+        products = products.filter(category=category_filter)
+
+    return render(request, "core/all_listings.html", {
+        "products": products,
+        "search_query": search_query,
+        "category_filter": category_filter,
+    })
+
+@login_required
+def my_listings(request):
+    products = Product.objects.filter(seller=request.user).order_by("-created_at")
+    return render(request, "core/my_listings.html", {"products": products})
+
+@login_required
+def delete_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    if product.seller != request.user:
+        return redirect("product_detail", pk=product.pk)
+
+    if request.method == "POST":
+        product.delete()
+        return redirect("my_listings")
+
+    return render(request, "core/delete_product.html", {"product": product})
+
+@login_required
+def saved_items(request):
+    saved_products = SavedProduct.objects.filter(user=request.user).select_related("product")
+
+    return render(request, "core/saved_items.html", {
+        "saved_products": saved_products
+    })
+
+@login_required
+def toggle_save_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    saved, created = SavedProduct.objects.get_or_create(
+        user=request.user,
+        product=product
+    )
+
+    if not created:
+        saved.delete()  # already saved → unsave
+
+    return redirect(request.META.get("HTTP_REFERER", "index"))

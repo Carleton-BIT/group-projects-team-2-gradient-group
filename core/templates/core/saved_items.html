@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include "core/head.html" %}
+<body>
+{% include "core/navbar.html" %}
+
+<main class="container" style="padding: 40px 0;">
+    <h1>Saved Items</h1>
+
+    {% if saved_products %}
+        <div class="product-grid">
+            {% for item in saved_products %}
+                <a href="{% url 'product_detail' item.product.pk %}" style="text-decoration:none; color:inherit;">
+                    <div class="product-card">
+                        {% if item.product.image %}
+                            <img class="product-card__img" src="{{ item.product.image.url }}">
+                        {% else %}
+                            <div class="product-card__img"></div>
+                        {% endif %}
+
+                        <div class="product-card__body">
+                            <div class="product-card__title">{{ item.product.title }}</div>
+                            <div class="product-card__meta">
+                                ${{ item.product.price }} • {{ item.product.get_category_display }}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You have no saved items yet.</p>
+    {% endif %}
+</main>
+
+{% include "core/footer.html" %}
+</body>
+</html>

@@ -26,4 +26,24 @@ A marketplace for Carleton University students to save money on textbooks.
 8. Navigate to 127.0.0.1:8000! The project should be running in your web browser.
 
 ## Usage
-TODO: write how to use the website
+### Creating an account
+- On the homepage you will see a hero section with the website's name, a description of it, and two buttons saying "Create account" and "Log in."
+- Click the "Create account" button to be redirected to the sign up page.
+- Create an account which follows the guidelines provided on the page.
+- Once you are done creating an account it will redirect you to the main page where you now how full access to the website.
+### Creating a product listing
+- On the navigation bar there will now be two new options, 'create listing' and 'Hello, [ your profile name ]'.
+- Clicking on your profile name will redirect you to your profile page, right now there shouldn't be any products yet because you haven't created a listing.
+- Clicking on 'create listing' will redirect you to a product creation page, fill out the form with the required information and click the Create Product button. 
+- Once you have successfully created a product listing you should be able to see the listing under which ever category you set it to.
+### User profile and listings
+- Now that you have created a product listing, it will appear in your user profile.
+- Navigate to your profile page, then click on 'My listings'.
+- You can view your created listings. When you are viewing your own product listing there will be a delete button where you can delete the listing.
+### Browse listings
+- On the homepage you are able to see the latest listings that have been uploaded to the website.
+- Above the latest listings section there is a search bar and category filter. You can either filter by keyword or product category... or both.
+- There is also a view all button to see all the products sorted from newest to oldest.
+### Saving listings
+- On product listings there will be a star icon which you can click to save it for later.
+- To view your starred listings navigate to your profile and click 'Saved items' to view all the listings you have saved.
