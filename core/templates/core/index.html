@@ -17,8 +17,8 @@
 
         <div class="home-hero__actions">
           {% if user.is_authenticated %}
-            <a class="btn btn-primary" href="#" aria-disabled="true">Browse</a>
-            <a class="btn btn-secondary" href="{% url 'profile' %}">Profile</a>
+              <a class="btn btn-primary" href="{% url 'all_listings' %}">Browse</a>
+              <a class="btn btn-secondary" href="{% url 'profile' %}">Profile</a>
           {% else %}
             <a class="btn btn-primary" href="{% url 'signup' %}">Create account</a>
             <a class="btn btn-secondary" href="{% url 'login' %}">Log in</a>
@@ -28,34 +28,34 @@
     </div>
   </section>
 
-  <!-- QUICK STATS / FEATURE CARDS -->
-  <section class="home-section">
-    <div class="container">
-      <h2 class="section-title">Browse categories</h2>
+<!-- QUICK STATS / FEATURE CARDS -->
+<section class="home-section">
+  <div class="container">
+    <h2 class="section-title">Browse categories</h2>
 
-      <div class="card-grid">
-        <a class="mini-card" href="#">
-          <div class="mini-card__title">Textbooks</div>
-          <div class="mini-card__meta">Find course books for less</div>
-        </a>
+    <div class="card-grid">
+      <a class="mini-card" href="{% url 'all_listings' %}?category=textbooks">
+        <div class="mini-card__title">Textbooks</div>
+        <div class="mini-card__meta">Find course books for less</div>
+      </a>
 
-        <a class="mini-card" href="#">
-          <div class="mini-card__title">Electronics</div>
-          <div class="mini-card__meta">Chargers, headphones, monitors</div>
-        </a>
+      <a class="mini-card" href="{% url 'all_listings' %}?category=electronics">
+        <div class="mini-card__title">Electronics</div>
+        <div class="mini-card__meta">Chargers, headphones, monitors</div>
+      </a>
 
-        <a class="mini-card" href="#">
-          <div class="mini-card__title">Dorm essentials</div>
-          <div class="mini-card__meta">Kitchen, storage, decor</div>
-        </a>
+      <a class="mini-card" href="{% url 'all_listings' %}?category=dorm_essentials">
+        <div class="mini-card__title">Dorm essentials</div>
+        <div class="mini-card__meta">Kitchen, storage, decor</div>
+      </a>
 
-        <a class="mini-card" href="#">
-          <div class="mini-card__title">Services</div>
-          <div class="mini-card__meta">Tutoring, notes, help</div>
-        </a>
-      </div>
+      <a class="mini-card" href="{% url 'all_listings' %}?category=services">
+        <div class="mini-card__title">Services</div>
+        <div class="mini-card__meta">Tutoring, notes, help</div>
+      </a>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- RED WAVE SECTION (Carleton vibe) -->
   <section class="home-wave">
@@ -100,7 +100,7 @@
       </div>
       <div class="section-head">
         <h2 class="section-title">Latest listings</h2>
-        <a class="link" href="#">View all</a>
+          <a class="link" href="{% url 'all_listings' %}">View all</a>
       </div>
       <div class="product-grid">
         {% for product in products %}

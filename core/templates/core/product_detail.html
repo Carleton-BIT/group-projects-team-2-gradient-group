@@ -66,6 +66,32 @@
                 <a href="{% url 'index' %}" class="product-btn product-btn-secondary">
                     Back to Listings
                 </a>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'toggle_save_product' product.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="save-btn" title="Save item">
+                            {% if is_saved %}
+                                <!-- Filled star -->
+                                <svg viewBox="0 0 24 24" class="star-icon saved">
+                                    <path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6L12 2z"/>
+                                </svg>
+                            {% else %}
+                                <!-- Outline star -->
+                                <svg viewBox="0 0 24 24" class="star-icon">
+                                    <path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6L12 2z" fill="none" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            {% endif %}
+                        </button>
+                    </form>
+                {% endif %}
+                {% if user.is_authenticated and user == product.seller %}
+                    <form method="post" action="{% url 'delete_product' product.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="product-btn product-btn-danger-outline" onclick="return confirm('Are you sure you want to delete this listing?');">
+                            Delete Listing
+                        </button>
+                    </form>
+                {% endif %}
             </div>
         </div>
     </div>
