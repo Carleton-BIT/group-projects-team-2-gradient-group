@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include "core/head.html" %}
+<body>
+  {% include "core/navbar.html" %}
+
+  <main class="container" style="padding: 40px 0;">
+    <h1>My Listings</h1>
+
+    {% if products %}
+      <div class="product-grid">
+        {% for product in products %}
+          <a href="{% url 'product_detail' product.pk %}" style="text-decoration: none; color: inherit;">
+            <div class="product-card">
+              {% if product.image %}
+                <img class="product-card__img" src="{{ product.image.url }}" alt="{{ product.title }}">
+              {% else %}
+                <div class="product-card__img" aria-hidden="true"></div>
+              {% endif %}
+
+              <div class="product-card__body">
+                <div class="product-card__title">{{ product.title }}</div>
+                <div class="product-card__meta">
+                  ${{ product.price }} • {{ product.get_category_display }}
+                </div>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>You have not posted any listings yet.</p>
+      <a class="btn btn-primary" href="{% url 'create_product_listing' %}">Post your first listing</a>
+    {% endif %}
+  </main>
+
+  {% include "core/footer.html" %}
+</body>
+</html>

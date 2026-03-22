@@ -57,42 +57,6 @@
             </div>
 
             <div class="field">
-              <label for="{{ form.student_number.id_for_label }}">Student Number</label>
-              {{ form.student_number }}
-              {{ form.student_number.errors }}
-              <div class="help">Digits only (example: 123456789).</div>
-            </div>
-
-            <div class="field">
-              <label for="{{ form.major.id_for_label }}">Major</label>
-              {{ form.major }}
-              {{ form.major.errors }}
-
-              <!-- datalist MUST be in the DOM; putting it right under the input is perfect -->
-              <datalist id="major-list">
-                {% for m in majors %}
-                  <option value="{{ m }}"></option>
-                {% endfor %}
-              </datalist>
-
-              <div class="help">Start typing, then pick from the suggestions.</div>
-            </div>
-
-            <div class="field">
-              <label for="{{ form.minor.id_for_label }}">Minor</label>
-              {{ form.minor }}
-              {{ form.minor.errors }}
-
-              <datalist id="minor-list">
-                {% for m in minors %}
-                  <option value="{{ m }}"></option>
-                {% endfor %}
-              </datalist>
-
-              <div class="help">Start typing, then pick from the suggestions.</div>
-            </div>
-
-            <div class="field">
               <label for="{{ form.password1.id_for_label }}">Password</label>
               {{ form.password1 }}
               {{ form.password1.errors }}

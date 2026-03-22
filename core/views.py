@@ -4,14 +4,48 @@ from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
-from .models import Product 
+from .models import Product, Profile
 
-from .forms import CustomUserCreationForm, MAJOR_CHOICES, MINOR_CHOICES, ProductCreateForm
+from .forms import CustomUserCreationForm, MAJOR_CHOICES, MINOR_CHOICES, ProductCreateForm, UserUpdateForm, ProfileUpdateForm
 
 
 @login_required
 def profile(request):
     return render(request, "core/profile.html")
+
+@login_required
+def edit_profile(request):
+    profile, created = Profile.objects.get_or_create(
+        user=request.user,
+        defaults={
+            "carleton_email": request.user.email or "",
+            "student_number": None,
+            "major": "",
+            "minor": "",
+        }
+    )
+
+    if request.method == "POST":
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, instance=profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect("profile")
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=profile)
+
+    return render(request, "core/edit_profile.html", {
+        "user_form": user_form,
+        "profile_form": profile_form,
+    })
+
+@login_required
+def my_listings(request):
+    products = Product.objects.filter(seller=request.user).order_by("-created_at")
+    return render(request, "core/my_listings.html", {"products": products})
 
 
 def index(request):
