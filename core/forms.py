@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 from .models import Profile, Product
@@ -143,17 +143,10 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = (
-            "username",
             "carleton_email",
             "password1",
             "password2",
         )
-
-    def clean_username(self):
-        username = (self.cleaned_data.get("username") or "").strip().lower()
-        if User.objects.filter(username__iexact=username).exists():
-            raise forms.ValidationError("That username is already taken.")
-        return username
 
     def clean_carleton_email(self):
         email = (self.cleaned_data.get("carleton_email") or "").strip().lower()
@@ -164,25 +157,45 @@ class CustomUserCreationForm(UserCreationForm):
         if Profile.objects.filter(carleton_email__iexact=email).exists():
             raise forms.ValidationError("An account with this Carleton email already exists.")
 
+        derived_username = email.split("@", 1)[0]
+
+        if User.objects.filter(username__iexact=derived_username).exists():
+            raise forms.ValidationError(
+                "That email prefix is already being used as a username. "
+                "Please use a different Carleton email."
+            )
+
         return email
 
     def save(self, commit=True):
         user = super().save(commit=False)
+
+        email = (self.cleaned_data.get("carleton_email") or "").strip().lower()
+        derived_username = email.split("@", 1)[0]
+
         user.first_name = (self.cleaned_data.get("first_name") or "").strip().title()
         user.last_name = (self.cleaned_data.get("last_name") or "").strip().title()
-        user.username = (self.cleaned_data.get("username") or "").strip().lower()
-        user.email = self.cleaned_data["carleton_email"]
+        user.username = derived_username
+        user.email = email
 
         if commit:
             user.save()
+            Profile.objects.update_or_create(
+                user=user,
+                defaults={
+                    "carleton_email": email,
+                },
+            )
 
-        Profile.objects.update_or_create(
-            user=user,
-            defaults={
-                "carleton_email": self.cleaned_data["carleton_email"],
-            },
-        )
         return user
+
+class EmailPrefixAuthenticationForm(AuthenticationForm):
+    def __init__(self, request=None, *args, **kwargs):
+        super().__init__(request, *args, **kwargs)
+        self.fields["username"].widget.attrs.update({
+            "placeholder": "Username is everything before @ in your email",
+            "autocomplete": "username",
+        })
 
 class ProductCreateForm(forms.ModelForm):
     class Meta:
