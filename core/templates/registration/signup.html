@@ -19,23 +19,19 @@
     <section class="card" aria-label="Create account card">
       <div class="card-hero">
         <h1>Create account</h1>
-        <p>Raven's Bargain is for Carleton students. Sign up with your Carleton email and student number.</p>
+        <p>Raven's Bargain is for Carleton students. Sign up with your Carleton email to create your account.</p>
       </div>
 
       <div class="card-body">
         <div class="panel">
           <h2>Register</h2>
-          <p class="muted">You will still log in using your <b>username</b> and <b>password</b>.</p>
+          <p class="muted">
+            Your username will be created automatically from your Carleton email.
+            Example: <b>username@cmail.carleton.ca</b> becomes <b>username</b>.
+          </p>
 
           <form method="post" novalidate>
             {% csrf_token %}
-
-            <div class="field">
-              <label for="{{ form.username.id_for_label }}">Username</label>
-              {{ form.username }}
-              {{ form.username.errors }}
-              <div class="help">Letters, digits and @/./+/-/_ only.</div>
-            </div>
 
             <div class="field">
               <label for="{{ form.first_name.id_for_label }}">First Name</label>
