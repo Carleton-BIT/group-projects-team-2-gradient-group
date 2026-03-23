@@ -57,6 +57,7 @@
   </div>
 </section>
 
+  {% if not user.is_authenticated %}
   <!-- RED WAVE SECTION (Carleton vibe) -->
   <section class="home-wave">
     <div class="home-wave__top" aria-hidden="true"></div>
@@ -73,6 +74,7 @@
 
     <div class="home-wave__bottom" aria-hidden="true"></div>
   </section>
+  {% endif %}
 
 
   <!-- SEARCH & LISTINGS -->
