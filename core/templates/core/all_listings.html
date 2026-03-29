@@ -1,100 +1,74 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-{% include "core/head.html" %}
-
+{% include 'core/head.html' %}
 <body>
-  {% include "core/navbar.html" %}
+{% include 'core/navbar.html' %}
 
-  <main class="container" style="padding: 40px 0;">
-    <div class="section-head" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
-      <h1 class="section-title" style="margin:0;">Browse Listings</h1>
-      <a class="link" href="{% url 'index' %}">Back to Home</a>
-    </div>
+<main class="home">
+  <section class="home-section">
+    <div class="container">
 
-    <form method="GET" action="{% url 'all_listings' %}"
-      style="margin: 18px 0 28px; display: grid; grid-template-columns: 1fr 200px 200px 140px 140px 180px auto auto; gap: 10px; align-items: end;">
-      
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-weight:600;">Search</label>
-        <input type="text" name="q" value="{{ search_query }}" placeholder="Title, description, course code, author..."
-          style="padding:10px; border:1px solid #ccc; border-radius:10px;">
-      </div>
+      <h2 class="section-title">Browse Listings</h2>
 
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-weight:600;">Category</label>
-        <select name="category" style="padding:10px; border:1px solid #ccc; border-radius:10px;">
-          <option value="">All</option>
-          {% for value,label in category_choices %}
-            <option value="{{ value }}" {% if category_filter == value %}selected{% endif %}>{{ label }}</option>
-          {% endfor %}
+      <!-- Search & Filter Form -->
+      <form method="GET" action="{% url 'all_listings' %}" style="display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;">
+        <input
+          type="text"
+          name="q"
+          value="{{ search_query }}"
+          placeholder="Search for items..."
+          style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px;"
+        >
+        <select
+          name="category"
+          style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; min-width: 160px;"
+        >
+          <option value="">All Categories</option>
+          <option value="textbooks" {% if category_filter == 'textbooks' %}selected{% endif %}>Textbooks</option>
+          <option value="electronics" {% if category_filter == 'electronics' %}selected{% endif %}>Electronics</option>
+          <option value="dorm_essentials" {% if category_filter == 'dorm_essentials' %}selected{% endif %}>Dorm Essentials</option>
+          <option value="services" {% if category_filter == 'services' %}selected{% endif %}>Services</option>
         </select>
-      </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a href="{% url 'all_listings' %}" class="btn btn-secondary btn-secondary--dark">Clear</a>
+      </form>
 
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-weight:600;">Condition</label>
-        <select name="condition" style="padding:10px; border:1px solid #ccc; border-radius:10px;">
-          <option value="">All</option>
-          {% for value,label in condition_choices %}
-            <option value="{{ value }}" {% if condition_filter == value %}selected{% endif %}>{{ label }}</option>
-          {% endfor %}
-        </select>
-      </div>
+      <!-- Results info -->
+      {% if search_query or category_filter %}
+        <p style="margin-bottom: 16px; font-size: 14px; color: #6b7280;">
+          Showing results
+          {% if search_query %}for "<strong>{{ search_query }}</strong>"{% endif %}
+          {% if category_filter %}in <strong>{{ category_filter|capfirst }}</strong>{% endif %}
+          — {{ products|length }} listing{{ products|length|pluralize }} found
+        </p>
+      {% endif %}
 
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-weight:600;">Min $</label>
-        <input type="text" name="min_price" value="{{ min_price }}" placeholder="0"
-          style="padding:10px; border:1px solid #ccc; border-radius:10px;">
-      </div>
-
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-weight:600;">Max $</label>
-        <input type="text" name="max_price" value="{{ max_price }}" placeholder="999"
-          style="padding:10px; border:1px solid #ccc; border-radius:10px;">
-      </div>
-
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-weight:600;">Sort</label>
-        <select name="sort" style="padding:10px; border:1px solid #ccc; border-radius:10px;">
-          <option value="newest" {% if sort == "newest" %}selected{% endif %}>Newest</option>
-          <option value="price_asc" {% if sort == "price_asc" %}selected{% endif %}>Price: Low → High</option>
-          <option value="price_desc" {% if sort == "price_desc" %}selected{% endif %}>Price: High → Low</option>
-        </select>
-      </div>
-
-      <button class="btn btn-primary" type="submit" style="height:42px;">Apply</button>
-      <a class="btn btn-secondary" href="{% url 'all_listings' %}" style="height:42px; display:inline-flex; align-items:center; justify-content:center;">Clear</a>
-    </form>
-
-    <p style="margin: 0 0 18px; opacity: 0.8;">
-      Showing <strong>{{ products|length }}</strong> result(s)
-    </p>
-
-    <div class="product-grid">
-      {% for product in products %}
-        <a href="{% url 'product_detail' product.pk %}" style="text-decoration:none; color:inherit;">
-          <div class="product-card">
-            {% if product.image %}
-              <img class="product-card__img" src="{{ product.image.url }}" alt="{{ product.title }}">
-            {% else %}
-              <div class="product-card__img" aria-hidden="true"></div>
-            {% endif %}
-
-            <div class="product-card__body">
-              <div class="product-card__title">{{ product.title }}</div>
-              <div class="product-card__meta">
-                ${{ product.price }} • {{ product.get_category_display|default:product.category }}
-                {% if product.condition %} • {{ product.get_condition_display|default:product.condition }}{% endif %}
+      <!-- Product Grid -->
+      <div class="product-grid">
+        {% for product in products %}
+          <a href="{% url 'product_detail' product.pk %}" style="text-decoration: none; color: inherit;">
+            <div class="product-card">
+              {% if product.image %}
+                <img class="product-card__img" src="{{ product.image.url }}" alt="{{ product.title }}">
+              {% else %}
+                <div class="product-card__img" aria-hidden="true"></div>
+              {% endif %}
+              <div class="product-card__body">
+                <div class="product-card__title">{{ product.title }}</div>
+                <div class="product-card__meta">${{ product.price }} • {{ product.get_category_display }}</div>
               </div>
             </div>
-          </div>
-        </a>
-      {% empty %}
-        <p style="padding: 20px 0;">No listings match your filters. Try clearing or broadening your search.</p>
-      {% endfor %}
-    </div>
-  </main>
+          </a>
+        {% empty %}
+          <p style="padding: 20px 0; color: #6b7280;">No listings found. Try a different search or clear your filters!</p>
+        {% endfor %}
+      </div>
 
-  {% include "core/footer.html" %}
+    </div>
+  </section>
+</main>
+
+{% include 'core/footer.html' %}
 </body>
 </html>

@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'core/head.html' %}
+<body>
+{% include 'core/navbar.html' %}
+
+<main class="container product-detail-page">
+    <div class="product-detail-card">
+        <div class="product-detail-image-wrap">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-detail-image">
+            {% else %}
+                <div class="product-detail-placeholder">
+                    No image available
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="product-detail-content">
+            {% if product.category %}
+                <div class="product-category-badge">
+                    {{ product.get_category_display }}
+                </div>
+            {% endif %}
+
+            <h1 class="product-title">{{ product.title }}</h1>
+            <div class="product-price">${{ product.price }}</div>
+
+            <div class="product-meta">
+                <div class="product-meta-box">
+                    <span class="product-meta-label">Condition</span>
+                    <span class="product-meta-value">{{ product.get_condition_display }}</span>
+                </div>
+
+                <div class="product-meta-box">
+                    <span class="product-meta-label">Seller</span>
+                    <span class="product-meta-value">{{ product.seller.username }}</span>
+                </div>
+
+                {% if product.author %}
+                <div class="product-meta-box">
+                    <span class="product-meta-label">Author</span>
+                    <span class="product-meta-value">{{ product.author }}</span>
+                </div>
+                {% endif %}
+
+                {% if product.course_code %}
+                <div class="product-meta-box">
+                    <span class="product-meta-label">Course Code</span>
+                    <span class="product-meta-value">{{ product.course_code }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="product-description-card">
+                <div class="product-description-title">Description</div>
+                <p class="product-description-text">{{ product.description }}</p>
+            </div>
+
+            <div class="product-actions">
+                <a href="mailto:{{ product.seller.profile.carleton_email }}?subject={{ request.user.username }} wants to buy {{ product.title }}" class="product-btn product-btn-primary">
+                    Contact Seller
+                </a>
+
+                <a href="{% url 'index' %}" class="product-btn product-btn-secondary">
+                    Back to Listings
+                </a>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'toggle_save_product' product.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="save-btn" title="Save item">
+                            {% if is_saved %}
+                                <!-- Filled star -->
+                                <svg viewBox="0 0 24 24" class="star-icon saved">
+                                    <path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6L12 2z"/>
+                                </svg>
+                            {% else %}
+                                <!-- Outline star -->
+                                <svg viewBox="0 0 24 24" class="star-icon">
+                                    <path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6L12 2z" fill="none" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            {% endif %}
+                        </button>
+                    </form>
+                {% endif %}
+                {% if user.is_authenticated and user == product.seller %}
+                    <form method="post" action="{% url 'delete_product' product.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="product-btn product-btn-danger-outline" onclick="return confirm('Are you sure you want to delete this listing?');">
+                            Delete Listing
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include 'core/footer.html' %}
+</body>
+</html>

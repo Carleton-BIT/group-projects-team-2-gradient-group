@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Profile
+from .models import Profile, Product
 
 MAJOR_CHOICES = [
     ("", "Select a major"),
@@ -140,85 +140,38 @@ class CustomUserCreationForm(UserCreationForm):
         widget=forms.EmailInput(attrs={"placeholder": "name@cmail.carleton.ca"}),
     )
 
-    student_number = forms.CharField(
-        required=True,
-        label="Student Number",
-        widget=forms.TextInput(attrs={"placeholder": "123456789"}),
-    )
-
-    # ✅ searchable inputs (datalist)
-    major = forms.CharField(
-        required=True,
-        label="Major",
-        widget=forms.TextInput(attrs={
-            "placeholder": "Start typing your major…",
-            "list": "major-list",
-            "autocomplete": "off",
-        }),
-    )
-
-    minor = forms.CharField(
-        required=True,
-        label="Minor",
-        widget=forms.TextInput(attrs={
-            "placeholder": "Start typing your minor…",
-            "list": "minor-list",
-            "autocomplete": "off",
-        }),
-    )
-
     class Meta:
         model = User
         fields = (
             "username",
             "carleton_email",
-            "student_number",
-            "major",
-            "minor",
             "password1",
             "password2",
         )
 
+    def clean_username(self):
+        username = (self.cleaned_data.get("username") or "").strip().lower()
+        if User.objects.filter(username__iexact=username).exists():
+            raise forms.ValidationError("That username is already taken.")
+        return username
+
     def clean_carleton_email(self):
         email = (self.cleaned_data.get("carleton_email") or "").strip().lower()
+
         if not (email.endswith("@cmail.carleton.ca") or email.endswith("@carleton.ca")):
             raise forms.ValidationError("Email must end in @cmail.carleton.ca or @carleton.ca.")
+
+        if Profile.objects.filter(carleton_email__iexact=email).exists():
+            raise forms.ValidationError("An account with this Carleton email already exists.")
+
         return email
-
-    def clean_student_number(self):
-        sn = (self.cleaned_data.get("student_number") or "").strip()
-        if not sn.isdigit():
-            raise forms.ValidationError("Student number must be digits only.")
-        return sn
-
-    # ✅ optional: enforce that typed major/minor must be from your lists
-    def clean_major(self):
-        val = (self.cleaned_data.get("major") or "").strip()
-        if not val:
-            return ""
-        allowed = {label for value, label in MAJOR_CHOICES if value}
-        if val not in allowed:
-            raise forms.ValidationError("Please choose a major from the suggestions.")
-        return val
-
-    def clean_minor(self):
-        val = (self.cleaned_data.get("minor") or "").strip()
-        if not val:
-            return ""
-        allowed = {label for value, label in MINOR_CHOICES if value}
-        if val not in allowed:
-            raise forms.ValidationError("Please choose a minor from the suggestions.")
-        return val
 
     def save(self, commit=True):
         user = super().save(commit=False)
-
-        # Capitalize names properly
         user.first_name = (self.cleaned_data.get("first_name") or "").strip().title()
         user.last_name = (self.cleaned_data.get("last_name") or "").strip().title()
-
-        # Optional but recommended: force usernames lowercase
         user.username = (self.cleaned_data.get("username") or "").strip().lower()
+        user.email = self.cleaned_data["carleton_email"]
 
         if commit:
             user.save()
@@ -227,9 +180,94 @@ class CustomUserCreationForm(UserCreationForm):
             user=user,
             defaults={
                 "carleton_email": self.cleaned_data["carleton_email"],
-                "student_number": self.cleaned_data["student_number"],
-                "major": self.cleaned_data.get("major", ""),
-                "minor": self.cleaned_data.get("minor", ""),
             },
         )
         return user
+
+class ProductCreateForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+            "title",
+            "author",
+            "course_code",
+            "description",
+            "price",
+            "category",
+            "condition",
+            "image",
+        ]
+        widgets = {
+            "description": forms.Textarea(attrs={"rows": 4}),
+            "title": forms.TextInput(attrs={"placeholder": "Book title"}),
+            "author": forms.TextInput(attrs={"placeholder": "Author name"}),
+            "course_code": forms.TextInput(attrs={"placeholder": "e.g. IRM3004"}),
+            "price": forms.NumberInput(attrs={"step": "0.01", "min": "0"}),
+            "category": forms.Select(),
+        }
+
+    def clean_price(self):
+        price = self.cleaned_data["price"]
+        if price <= 0:
+            raise forms.ValidationError("Price must be greater than 0.")
+        return price
+
+    def clean_course_code(self):
+        return self.cleaned_data["course_code"].upper().strip()
+
+
+# Profile editing
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "email"]
+
+class ProfileUpdateForm(forms.ModelForm):
+    major = forms.ChoiceField(
+        choices=MAJOR_CHOICES,
+        required=False,
+        label="Major",
+        widget=forms.Select(attrs={"class": "form-select"})
+    )
+
+    minor = forms.ChoiceField(
+        choices=MINOR_CHOICES,
+        required=False,
+        label="Minor",
+        widget=forms.Select(attrs={"class": "form-select"})
+    )
+
+    class Meta:
+        model = Profile
+        fields = ["carleton_email", "student_number", "major", "minor"]
+        widgets = {
+            "carleton_email": forms.EmailInput(attrs={"placeholder": "name@cmail.carleton.ca"}),
+            "student_number": forms.TextInput(attrs={"placeholder": "123456789"}),
+        }
+
+    def clean_carleton_email(self):
+        email = (self.cleaned_data.get("carleton_email") or "").strip().lower()
+
+        if not (email.endswith("@cmail.carleton.ca") or email.endswith("@carleton.ca")):
+            raise forms.ValidationError("Email must end in @cmail.carleton.ca or @carleton.ca.")
+
+        qs = Profile.objects.filter(carleton_email__iexact=email).exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise forms.ValidationError("An account with this Carleton email already exists.")
+
+        return email
+
+    def clean_student_number(self):
+        sn = (self.cleaned_data.get("student_number") or "").strip()
+
+        if not sn:
+            return None
+
+        if not sn.isdigit():
+            raise forms.ValidationError("Student number must be digits only.")
+
+        qs = Profile.objects.filter(student_number=sn).exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise forms.ValidationError("This student number is already in use.")
+
+        return sn
