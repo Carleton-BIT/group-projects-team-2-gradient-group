@@ -507,6 +507,15 @@ body.auth-page .header img {
   gap: 16px;
 }
 
+/* Resolved narrow screen/mobile view for registration UI*/
+@media (max-width: 760px) {
+  .card-body {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+
 .panel {
   border: 1px solid var(--border);
   border-radius: 14px;
