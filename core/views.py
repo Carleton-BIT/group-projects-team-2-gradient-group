@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
-from .models import Product, Profile, SavedProduct
+from .models import Product, Profile, SavedProduct, Feedback
 
 from .forms import CustomUserCreationForm, MAJOR_CHOICES, MINOR_CHOICES, ProductCreateForm, UserUpdateForm, ProfileUpdateForm
 
@@ -93,6 +93,63 @@ def all_listings(request):
         'category_filter': category_filter,
     }
     return render(request, "core/all_listings.html", context)
+
+
+@login_required
+def feedback(request):
+    submitted = False
+
+    if request.method == "POST":
+        message = request.POST.get("message", "").strip()
+        if message:
+            Feedback.objects.create(user=request.user, message=message)
+            submitted = True
+
+    return render(request, "core/feedback.html", {"submitted": submitted})
+
+
+@login_required
+def create_product_listing(request):
+    if request.method == "POST":
+        form = ProductCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.seller = request.user
+            product.save()
+            return redirect("my_listings")
+    else:
+        form = ProductCreateForm()
+    return render(request, "core/create_product_listing.html", {"form": form})
+
+
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, "core/product_detail.html", {"product": product})
+
+
+@login_required
+def delete_product(request, pk):
+    product = get_object_or_404(Product, pk=pk, seller=request.user)
+    if request.method == "POST":
+        product.delete()
+    return redirect("my_listings")
+
+
+@login_required
+def saved_items(request):
+    saved = SavedProduct.objects.filter(user=request.user)
+    return render(request, "core/saved_items.html", {"saved": saved})
+
+
+@login_required
+def toggle_save_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    saved = SavedProduct.objects.filter(user=request.user, product=product)
+    if saved.exists():
+        saved.delete()
+    else:
+        SavedProduct.objects.create(user=request.user, product=product)
+    return redirect("product_detail", pk=pk)
 
 
 def signup(request):
