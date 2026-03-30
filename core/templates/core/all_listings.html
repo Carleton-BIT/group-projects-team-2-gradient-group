@@ -5,58 +5,68 @@
 <body>
 {% include 'core/navbar.html' %}
 
-<main class="container" style="padding: 40px 0;">
-    <div class="section-head" style="margin-bottom: 24px;">
-        <h1 class="section-title">All Listings</h1>
-        <a class="link" href="{% url 'index' %}">Back home</a>
-    </div>
+<main class="home">
+  <section class="home-section">
+    <div class="container">
 
-    <div class="search-container" style="margin-bottom: 30px;">
-        <form method="GET" action="{% url 'all_listings' %}" style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <input
-                type="text"
-                name="q"
-                value="{{ search_query }}"
-                placeholder="Search for items..."
-                class="form-control"
-                style="flex: 1; min-width: 240px; padding: 10px; border-radius: 5px; border: 1px solid #ccc;"
-            >
+      <h2 class="section-title">Browse Listings</h2>
 
-            <select name="category" class="form-select" style="width: 220px; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-                <option value="">All Categories</option>
-                <option value="textbooks" {% if category_filter == 'textbooks' %}selected{% endif %}>Textbooks</option>
-                <option value="electronics" {% if category_filter == 'electronics' %}selected{% endif %}>Electronics</option>
-                <option value="dorm_essentials" {% if category_filter == 'dorm_essentials' %}selected{% endif %}>Dorm essentials</option>
-                <option value="services" {% if category_filter == 'services' %}selected{% endif %}>Services</option>
-            </select>
+      <!-- Search & Filter Form -->
+      <form method="GET" action="{% url 'all_listings' %}" style="display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;">
+        <input
+          type="text"
+          name="q"
+          value="{{ search_query }}"
+          placeholder="Search for items..."
+          style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px;"
+        >
+        <select
+          name="category"
+          style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; min-width: 160px;"
+        >
+          <option value="">All Categories</option>
+          <option value="textbooks" {% if category_filter == 'textbooks' %}selected{% endif %}>Textbooks</option>
+          <option value="electronics" {% if category_filter == 'electronics' %}selected{% endif %}>Electronics</option>
+          <option value="dorm_essentials" {% if category_filter == 'dorm_essentials' %}selected{% endif %}>Dorm Essentials</option>
+          <option value="services" {% if category_filter == 'services' %}selected{% endif %}>Services</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a href="{% url 'all_listings' %}" class="btn btn-secondary btn-secondary--dark">Clear</a>
+      </form>
 
-            <button type="submit" class="btn btn-primary" style="padding: 10px 20px;">Search</button>
-            <a href="{% url 'all_listings' %}" class="btn btn-secondary" style="padding: 10px 20px;">Clear</a>
-        </form>
-    </div>
+      <!-- Results info -->
+      {% if search_query or category_filter %}
+        <p style="margin-bottom: 16px; font-size: 14px; color: #6b7280;">
+          Showing results
+          {% if search_query %}for "<strong>{{ search_query }}</strong>"{% endif %}
+          {% if category_filter %}in <strong>{{ category_filter|capfirst }}</strong>{% endif %}
+          — {{ products|length }} listing{{ products|length|pluralize }} found
+        </p>
+      {% endif %}
 
-    <div class="product-grid">
+      <!-- Product Grid -->
+      <div class="product-grid">
         {% for product in products %}
-            <a href="{% url 'product_detail' product.pk %}" style="text-decoration: none; color: inherit;">
-                <div class="product-card">
-                    {% if product.image %}
-                        <img class="product-card__img" src="{{ product.image.url }}" alt="{{ product.title }}">
-                    {% else %}
-                        <div class="product-card__img" aria-hidden="true"></div>
-                    {% endif %}
-
-                    <div class="product-card__body">
-                        <div class="product-card__title">{{ product.title }}</div>
-                        <div class="product-card__meta">
-                            ${{ product.price }} • {{ product.get_category_display }}
-                        </div>
-                    </div>
-                </div>
-            </a>
+          <a href="{% url 'product_detail' product.pk %}" style="text-decoration: none; color: inherit;">
+            <div class="product-card">
+              {% if product.image %}
+                <img class="product-card__img" src="{{ product.image.url }}" alt="{{ product.title }}">
+              {% else %}
+                <div class="product-card__img" aria-hidden="true"></div>
+              {% endif %}
+              <div class="product-card__body">
+                <div class="product-card__title">{{ product.title }}</div>
+                <div class="product-card__meta">${{ product.price }} • {{ product.get_category_display }}</div>
+              </div>
+            </div>
+          </a>
         {% empty %}
-            <p>No listings found.</p>
+          <p style="padding: 20px 0; color: #6b7280;">No listings found. Try a different search or clear your filters!</p>
         {% endfor %}
+      </div>
+
     </div>
+  </section>
 </main>
 
 {% include 'core/footer.html' %}
