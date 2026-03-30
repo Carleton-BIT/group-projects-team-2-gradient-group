@@ -18,11 +18,10 @@
       <a class="site-header__link" href="{% url 'all_listings' %}">Browse</a>
 
       {% if user.is_authenticated %}
-          <a class="user-menu__button" href="{% url 'create_product_listing' %}">
-              Create Listing
-          </a>
+        <a class="user-menu__button" href="{% url 'create_product_listing' %}">
+          Create Listing
+        </a>
 
-  <div class="user-menu">
         <div class="user-menu">
           <button class="user-menu__button" type="button">
             Hello, {{ user.first_name|default:user.username }}

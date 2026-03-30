@@ -5,25 +5,34 @@
 <body>
   {% include "core/navbar.html" %}
 
-  <main class="container" style="padding: 40px 0;">
-    <h1>Edit Profile</h1>
+  <main class="container edit-profile-page">
+    <section class="profile-card edit-profile-card">
+      <div class="profile-card__head">
+        <h1 class="profile-card__title">Edit profile</h1>
+        <p class="profile-card__sub">
+          Keep your account details current so buyers and sellers can trust your listings.
+        </p>
+      </div>
 
-    <form method="post" style="max-width: 700px;">
-      {% csrf_token %}
+      <form method="post" class="edit-profile-form">
+        {% csrf_token %}
 
-      <fieldset style="margin-bottom: 24px;">
-        <legend>Account Info</legend>
-        {{ user_form.as_p }}
-      </fieldset>
+        <fieldset class="edit-profile-fieldset">
+          <legend>Account info</legend>
+          {{ user_form.as_p }}
+        </fieldset>
 
-      <fieldset style="margin-bottom: 24px;">
-        <legend>Student Details</legend>
-        {{ profile_form.as_p }}
-      </fieldset>
+        <fieldset class="edit-profile-fieldset">
+          <legend>Student details</legend>
+          {{ profile_form.as_p }}
+        </fieldset>
 
-      <button type="submit" class="btn btn-primary">Save Changes</button>
-      <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+        <div class="edit-profile-actions">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <a href="{% url 'profile' %}" class="btn btn-secondary btn-secondary--dark">Cancel</a>
+        </div>
+      </form>
+    </section>
   </main>
 
   {% include "core/footer.html" %}
