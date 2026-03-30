@@ -203,6 +203,16 @@ body {
   position: relative;
 }
 
+/* fixed errors when clicking on dropdown */
+.user-menu::after{
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  height: 12px;
+}
+
 .user-menu__button{
   border: 1px solid var(--colour-grey);
   background: #ffffff;
@@ -230,7 +240,7 @@ body {
 .user-menu__dropdown{
   position: absolute;
   right: 0;
-  top: calc(100% + 10px);
+  top: calc(100% + 4px); /* CHANGED from +10px */
   min-width: 190px;
   background: #ffffff;
   border: 1px solid var(--colour-grey);
@@ -238,6 +248,7 @@ body {
   box-shadow: 0 18px 50px rgba(0,0,0,.15);
   padding: 8px;
   display: none;
+  z-index: 1000; /* NEW */
 }
 
 /* show on hover OR focus within */
